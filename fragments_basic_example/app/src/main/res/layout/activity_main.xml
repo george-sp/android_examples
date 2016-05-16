@@ -10,14 +10,15 @@
     <fragment
         android:id="@+id/menu_fragment"
         class="com.example.george.fragments_basic_example.MenuFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
     <fragment
         android:id="@+id/text_fragment"
         class="com.example.george.fragments_basic_example.TextFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="2"/>
 
 </LinearLayout>
