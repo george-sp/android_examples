@@ -24,7 +24,7 @@ public class MenuFragment extends ListFragment {
             "Froyo",
             "Gingerbread",
             "Honeycomb",
-            "Ice Cream SandWich",
+            "Ice Cream Sandwich",
             "Jelly Bean",
             "KitKat",
             "Lollipop",
