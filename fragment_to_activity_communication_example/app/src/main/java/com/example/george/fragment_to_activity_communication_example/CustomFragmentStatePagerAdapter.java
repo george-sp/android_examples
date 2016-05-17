@@ -17,11 +17,11 @@ import java.util.ArrayList;
  * ---------->    http://codeburrow.com    <----------
  * ===================================================
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class CustomFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
     private final SparseArray<WeakReference<Fragment>> instantiatedFragments = new SparseArray<>();
     private ArrayList<String> mTabHeader;
 
-    public PagerAdapter(FragmentManager fm, ArrayList<String> tabHeader) {
+    public CustomFragmentStatePagerAdapter(FragmentManager fm, ArrayList<String> tabHeader) {
         super(fm);
         this.mTabHeader = tabHeader;
     }

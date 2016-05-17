@@ -18,6 +18,7 @@ import android.widget.Toast;
  * ===================================================
  */
 public class TabFragmentB extends Fragment implements View.OnClickListener {
+
     private FragmentToActivityInterface mCallback;
     private TextView mTextView1;
     private Button btnFtoA;

@@ -3,20 +3,20 @@ package com.example.george.fragment_to_activity_communication_example;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentToActivityInterface {
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
-    private PagerAdapter mPagerAdapter;
+    private CustomFragmentStatePagerAdapter mPagerAdapter;
     private TabLayout mTabLayout;
 
     @Override
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabs);
+        mPagerAdapter = new CustomFragmentStatePagerAdapter(getSupportFragmentManager(), tabs);
         viewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(viewPager);
     }
@@ -69,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void communicateToFragmentB() {
+        TabFragmentB fragment = (TabFragmentB) mPagerAdapter.getFragment(1);
+        if (fragment != null) {
+            fragment.fragmentCommunication();
+        } else {
+            Log.i(LOG_TAG, "Fragment 2 is not initialized");
+        }
     }
 
 }
