@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.george.nfc_tag_reader_example">
 
+    <!-- NFC is only supported after Android 2.3.3 -->
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="23"/>
+
+    <!-- Get permission to use the NFC hardware -->
+    <uses-permission android:name="android.permission.NFC" />
+
+    <!-- The app can't installed on devices without NFC hardware -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
