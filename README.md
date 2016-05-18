@@ -2,4 +2,4 @@
 Some basic and useful android examples
 
 ---------------------------------------
-- NFC Tag Reader
+- NFC Tag Reader (NDEF Tag)
