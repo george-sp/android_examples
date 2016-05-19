@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">nfc_tag_writer_example</string>
+
+    <!-- activity_main.xml -->
+    <string name="write_your_message">Enter NDEF message</string>
+    <string name="write_button">Write to Tag</string>
 </resources>
