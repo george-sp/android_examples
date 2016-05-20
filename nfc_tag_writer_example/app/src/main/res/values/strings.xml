@@ -7,4 +7,7 @@
 
     <string name="ok_detection">TAG DETECTED: </string>
     <string name="error_detection">NO TAG DETECTED!</string>
+
+    <string name="ok_writing">Success: Ndef message successfully written!</string>
+    <string name="error_writing">Failure: Something went wrong. Try Again. </string>
 </resources>
