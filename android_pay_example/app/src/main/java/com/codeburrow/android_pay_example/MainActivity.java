@@ -15,6 +15,7 @@ import com.google.android.gms.wallet.FullWalletRequest;
 import com.google.android.gms.wallet.LineItem;
 import com.google.android.gms.wallet.MaskedWallet;
 import com.google.android.gms.wallet.MaskedWalletRequest;
+import com.google.android.gms.wallet.NotifyTransactionStatusRequest;
 import com.google.android.gms.wallet.Wallet;
 import com.google.android.gms.wallet.WalletConstants;
 import com.google.android.gms.wallet.fragment.BuyButtonText;
@@ -175,6 +176,13 @@ public class MainActivity extends AppCompatActivity implements
                         Toast.makeText(this,
                                 mFullWallet.getProxyCard().getPan().toString(),
                                 Toast.LENGTH_SHORT).show();
+                        // Update transaction status
+                        Wallet.Payments.notifyTransactionStatus(
+                                mGoogleApiClient,
+                                generateNotifyTransactionStatusRequest(
+                                        mFullWallet.getGoogleTransactionId(),
+                                        NotifyTransactionStatusRequest.Status.SUCCESS)
+                        );
                         break;
                     case WalletConstants.RESULT_ERROR:
                         Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
@@ -271,5 +279,22 @@ public class MainActivity extends AppCompatActivity implements
                 mGoogleApiClient,
                 generateFullWalletRequest(mMaskedWallet.getGoogleTransactionId()),
                 FULL_WALLET_REQUEST_CODE);
+    }
+
+    /**
+     * Helper Method
+     * <p/>
+     * Generate the Notify Transaction Status Request.
+     *
+     * @param googleTransactionId
+     * @param status
+     * @return
+     */
+    public static NotifyTransactionStatusRequest generateNotifyTransactionStatusRequest(
+            String googleTransactionId, int status) {
+        return NotifyTransactionStatusRequest.newBuilder()
+                .setGoogleTransactionId(googleTransactionId)
+                .setStatus(status)
+                .build();
     }
 }
