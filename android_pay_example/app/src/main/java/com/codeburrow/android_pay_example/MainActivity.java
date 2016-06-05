@@ -6,6 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.android.gms.wallet.Cart;
 import com.google.android.gms.wallet.LineItem;
 import com.google.android.gms.wallet.MaskedWalletRequest;
+import com.google.android.gms.wallet.WalletConstants;
+import com.google.android.gms.wallet.fragment.BuyButtonText;
+import com.google.android.gms.wallet.fragment.Dimension;
+import com.google.android.gms.wallet.fragment.SupportWalletFragment;
+import com.google.android.gms.wallet.fragment.WalletFragmentInitParams;
+import com.google.android.gms.wallet.fragment.WalletFragmentMode;
+import com.google.android.gms.wallet.fragment.WalletFragmentOptions;
+import com.google.android.gms.wallet.fragment.WalletFragmentStyle;
 
 /**
  * ======>    The Transaction Flow    <======
@@ -17,10 +25,39 @@ import com.google.android.gms.wallet.MaskedWalletRequest;
  */
 public class MainActivity extends AppCompatActivity {
 
+    // SupportWalletFragment instance variable
+    private SupportWalletFragment mWalletFragment;
+    // Request code constant
+    public static final int MASKED_WALLET_REQUEST_CODE = 888;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Wallet fragment style
+        WalletFragmentStyle walletFragmentStyle = new WalletFragmentStyle()
+                .setBuyButtonText(BuyButtonText.BUY_NOW)
+                .setBuyButtonWidth(Dimension.MATCH_PARENT);
+
+        // Wallet fragment options
+        WalletFragmentOptions walletFragmentOptions = WalletFragmentOptions.newBuilder()
+                .setEnvironment(WalletConstants.ENVIRONMENT_SANDBOX)
+                .setFragmentStyle(walletFragmentStyle)
+                .setTheme(WalletConstants.THEME_LIGHT)
+                .setMode(WalletFragmentMode.BUY_BUTTON)
+                .build();
+
+        // Instantiate the WalletFragment
+        mWalletFragment = SupportWalletFragment.newInstance(walletFragmentOptions);
+
+        // Initialize the WalletFragment
+        WalletFragmentInitParams.Builder startParamsBuilder =
+                WalletFragmentInitParams.newBuilder()
+                        .setMaskedWalletRequest(generateMaskedWalletRequest())
+                        .setMaskedWalletRequestCode(MASKED_WALLET_REQUEST_CODE)
+                        .setAccountName("Google I/O Codelab");
+        mWalletFragment.initialize(startParamsBuilder.build());
     }
 
     /**
