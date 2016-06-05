@@ -15,6 +15,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- Add the Google Play Services Tag
+             to enable Google Play Services in your app.-->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+        <!-- Add the Android Pay Tag
+             to enable the Android Pay API in your app.-->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true"/>
+
     </application>
 
 </manifest>
