@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.android.gms.wallet.Cart;
+import com.google.android.gms.wallet.FullWalletRequest;
 import com.google.android.gms.wallet.LineItem;
 import com.google.android.gms.wallet.MaskedWallet;
 import com.google.android.gms.wallet.MaskedWalletRequest;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     case WalletConstants.RESULT_ERROR:
                         Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
                         break;
-                                                                                                                     }
+                }
         }
     }
 
@@ -143,6 +144,46 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
         return maskedWalletRequest;
+    }
+
+    // Just like with Masked Wallet, you need to create a request object to get a Full Wallet.
+
+    /**
+     * Helper Method
+     * <p/>
+     * Generate the Full Wallet Request.
+     * <p/>
+     * When you request a Full Wallet,
+     * you get a one-time card from Google and the user’s full billing and shipping information.
+     * This card is backed by the user’s secured payment credentials.
+     *
+     * @param googleTransactionId Can be found in the Masked Wallet Response
+     * @return FullWalletRequest
+     */
+    private FullWalletRequest generateFullWalletRequest(String googleTransactionId) {
+        // You'll also want to add information about the purchase including the exact amount you will be charging for.
+        // Here we have a $10.00 sticker with $0.10 tax
+        FullWalletRequest fullWalletRequest = FullWalletRequest.newBuilder()
+                .setGoogleTransactionId(googleTransactionId)
+                .setCart(Cart.newBuilder()
+                        .setCurrencyCode("USD")
+                        .setTotalPrice("10.10")
+                        .addLineItem(LineItem.newBuilder()
+                                .setCurrencyCode("USD")
+                                .setDescription("Google I/O Sticker")
+                                .setQuantity("1")
+                                .setUnitPrice("10.00")
+                                .setTotalPrice("10.00")
+                                .build())
+                        .addLineItem(LineItem.newBuilder()
+                                .setCurrencyCode("USD")
+                                .setDescription("Tax")
+                                .setRole(LineItem.Role.TAX)
+                                .setTotalPrice(".10")
+                                .build())
+                        .build())
+                .build();
+        return fullWalletRequest;
     }
 
 }
