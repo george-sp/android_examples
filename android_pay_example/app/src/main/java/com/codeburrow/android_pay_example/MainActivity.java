@@ -29,35 +29,51 @@ public class MainActivity extends AppCompatActivity {
     private SupportWalletFragment mWalletFragment;
     // Request code constant
     public static final int MASKED_WALLET_REQUEST_CODE = 888;
+    // Constant to contain the WalletFragment's tag
+    public static final String WALLET_FRAGMENT_ID = "wallet_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Wallet fragment style
-        WalletFragmentStyle walletFragmentStyle = new WalletFragmentStyle()
-                .setBuyButtonText(BuyButtonText.BUY_NOW)
-                .setBuyButtonWidth(Dimension.MATCH_PARENT);
+        // Check if WalletFragment exists.
+        mWalletFragment = (SupportWalletFragment) getSupportFragmentManager()
+                .findFragmentByTag(WALLET_FRAGMENT_ID);
 
-        // Wallet fragment options
-        WalletFragmentOptions walletFragmentOptions = WalletFragmentOptions.newBuilder()
-                .setEnvironment(WalletConstants.ENVIRONMENT_SANDBOX)
-                .setFragmentStyle(walletFragmentStyle)
-                .setTheme(WalletConstants.THEME_LIGHT)
-                .setMode(WalletFragmentMode.BUY_BUTTON)
-                .build();
+        // If already exists in the Activity, don't add WalletFragment twice.
+        if (mWalletFragment == null) {
 
-        // Instantiate the WalletFragment
-        mWalletFragment = SupportWalletFragment.newInstance(walletFragmentOptions);
+            // Wallet fragment style.
+            WalletFragmentStyle walletFragmentStyle = new WalletFragmentStyle()
+                    .setBuyButtonText(BuyButtonText.BUY_NOW)
+                    .setBuyButtonWidth(Dimension.MATCH_PARENT);
 
-        // Initialize the WalletFragment
-        WalletFragmentInitParams.Builder startParamsBuilder =
-                WalletFragmentInitParams.newBuilder()
-                        .setMaskedWalletRequest(generateMaskedWalletRequest())
-                        .setMaskedWalletRequestCode(MASKED_WALLET_REQUEST_CODE)
-                        .setAccountName("Google I/O Codelab");
-        mWalletFragment.initialize(startParamsBuilder.build());
+            // Wallet fragment options.
+            WalletFragmentOptions walletFragmentOptions = WalletFragmentOptions.newBuilder()
+                    .setEnvironment(WalletConstants.ENVIRONMENT_SANDBOX)
+                    .setFragmentStyle(walletFragmentStyle)
+                    .setTheme(WalletConstants.THEME_LIGHT)
+                    .setMode(WalletFragmentMode.BUY_BUTTON)
+                    .build();
+
+            // Instantiate the WalletFragment.
+            mWalletFragment = SupportWalletFragment.newInstance(walletFragmentOptions);
+
+            // Initialize the WalletFragment.
+            WalletFragmentInitParams.Builder startParamsBuilder =
+                    WalletFragmentInitParams.newBuilder()
+                            .setMaskedWalletRequest(generateMaskedWalletRequest())
+                            .setMaskedWalletRequestCode(MASKED_WALLET_REQUEST_CODE)
+                            .setAccountName("Google I/O Codelab");
+            mWalletFragment.initialize(startParamsBuilder.build());
+
+            // Add the WalletFragment to the UI.
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.wallet_button_holder, mWalletFragment, WALLET_FRAGMENT_ID)
+                    .commit();
+        }
+
     }
 
     /**
