@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wallet.Cart;
 import com.google.android.gms.wallet.FullWalletRequest;
 import com.google.android.gms.wallet.LineItem;
 import com.google.android.gms.wallet.MaskedWallet;
 import com.google.android.gms.wallet.MaskedWalletRequest;
+import com.google.android.gms.wallet.Wallet;
 import com.google.android.gms.wallet.WalletConstants;
 import com.google.android.gms.wallet.fragment.BuyButtonText;
 import com.google.android.gms.wallet.fragment.Dimension;
@@ -28,8 +31,12 @@ import com.google.android.gms.wallet.fragment.WalletFragmentStyle;
  * 3. Request a Full Wallet object
  * 4. Get a Full Wallet object
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
+    // GoogleApiClient instance variable
+    private GoogleApiClient mGoogleApiClient;
     // SupportWalletFragment instance variable
     private SupportWalletFragment mWalletFragment;
     // MaskedWallet instance variable
@@ -81,6 +88,50 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+        buildGoogleApiClient();
+    }
+
+    /**
+     * Helper Method
+     * <p/>
+     * Build the Google Api Client.
+     */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Wallet.API, new Wallet.WalletOptions.Builder()
+                        .setEnvironment(WalletConstants.ENVIRONMENT_SANDBOX)
+                        .setTheme(WalletConstants.THEME_LIGHT)
+                        .build())
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        // GoogleApiClient is connected, we don't need to do anything here
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        // GoogleApiClient is temporarily disconnected, no action needed
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        // GoogleApiClient failed to connect, we should log the error and retry
     }
 
     @Override
