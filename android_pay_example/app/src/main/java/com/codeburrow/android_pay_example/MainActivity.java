@@ -1,10 +1,14 @@
 package com.codeburrow.android_pay_example;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.wallet.Cart;
 import com.google.android.gms.wallet.LineItem;
+import com.google.android.gms.wallet.MaskedWallet;
 import com.google.android.gms.wallet.MaskedWalletRequest;
 import com.google.android.gms.wallet.WalletConstants;
 import com.google.android.gms.wallet.fragment.BuyButtonText;
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     // SupportWalletFragment instance variable
     private SupportWalletFragment mWalletFragment;
+    // MaskedWallet instance variable
+    private MaskedWallet mMaskedWallet;
     // Request code constant
     public static final int MASKED_WALLET_REQUEST_CODE = 888;
     // Constant to contain the WalletFragment's tag
@@ -74,6 +80,31 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /**
+         * Check to see if the request code is for your Masked Wallet request
+         * and store the resulting response
+         */
+        switch (requestCode) {
+            case MASKED_WALLET_REQUEST_CODE:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        mMaskedWallet = data.getParcelableExtra(WalletConstants.EXTRA_MASKED_WALLET);
+                        Toast.makeText(this, "Got Masked Wallet", Toast.LENGTH_SHORT).show();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        // The user canceled the operation
+                        break;
+                    case WalletConstants.RESULT_ERROR:
+                        Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+                        break;
+                                                                                                                     }
+        }
     }
 
     /**
