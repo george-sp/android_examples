@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wallet.Cart;
+import com.google.android.gms.wallet.FullWallet;
 import com.google.android.gms.wallet.FullWalletRequest;
 import com.google.android.gms.wallet.LineItem;
 import com.google.android.gms.wallet.MaskedWallet;
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements
     private MaskedWallet mMaskedWallet;
     // Request code constant
     public static final int MASKED_WALLET_REQUEST_CODE = 888;
+    // FullWallet instance variable
+    private FullWallet mFullWallet;
+    // Request code constant
+    public static final int FULL_WALLET_REQUEST_CODE = 889;
     // Constant to contain the WalletFragment's tag
     public static final String WALLET_FRAGMENT_ID = "wallet_fragment";
 
@@ -146,7 +152,8 @@ public class MainActivity extends AppCompatActivity implements
             case MASKED_WALLET_REQUEST_CODE:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        mMaskedWallet = data.getParcelableExtra(WalletConstants.EXTRA_MASKED_WALLET);
+                        mMaskedWallet = data
+                                .getParcelableExtra(WalletConstants.EXTRA_MASKED_WALLET);
                         Toast.makeText(this, "Got Masked Wallet", Toast.LENGTH_SHORT).show();
                         break;
                     case Activity.RESULT_CANCELED:
@@ -156,6 +163,24 @@ public class MainActivity extends AppCompatActivity implements
                         Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
                         break;
                 }
+                break;
+            case FULL_WALLET_REQUEST_CODE:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        mFullWallet = data
+                                .getParcelableExtra(WalletConstants.EXTRA_FULL_WALLET);
+                        // Once you have the Full Wallet object, you have the one-time payment credentials.
+                        // You can access the credit card number with the following call: mFullWallet.getProxyCard().getPan();
+                        // Show the credit card number
+                        Toast.makeText(this,
+                                mFullWallet.getProxyCard().getPan().toString(),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case WalletConstants.RESULT_ERROR:
+                        Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
         }
     }
 
@@ -237,4 +262,14 @@ public class MainActivity extends AppCompatActivity implements
         return fullWalletRequest;
     }
 
+    public void requestFullWallet(View view) {
+        if (mMaskedWallet == null) {
+            Toast.makeText(this, "No masked wallet, can't confirm.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Wallet.Payments.loadFullWallet(
+                mGoogleApiClient,
+                generateFullWalletRequest(mMaskedWallet.getGoogleTransactionId()),
+                FULL_WALLET_REQUEST_CODE);
+    }
 }
