@@ -11,7 +11,54 @@
     tools:context="com.codeburrow.audio_capture_example.MainActivity">
 
     <TextView
+        android:id="@+id/audio_capture_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Audio Capture"
+        android:textSize="30sp"/>
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/audio_capture_textview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:src="@drawable/logo"/>
+
+    <Button
+        android:id="@+id/record_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageview"
+        android:layout_marginTop="59dp"
+        android:background="@color/colorPrimary"
+        android:text="Record"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/stop_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/record_button"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:text="Stop"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/stop_button"
+        android:background="@color/colorPrimary"
+        android:text="Play"
+        android:textColor="@android:color/white"/>
+
 </RelativeLayout>
