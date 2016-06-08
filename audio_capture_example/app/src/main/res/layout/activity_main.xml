@@ -37,6 +37,7 @@
         android:layout_below="@+id/imageview"
         android:layout_marginTop="59dp"
         android:background="@color/colorPrimary"
+        android:onClick="recordAudio"
         android:text="Record"
         android:textColor="@android:color/white"/>
 
@@ -47,6 +48,7 @@
         android:layout_alignTop="@+id/record_button"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
+        android:onClick="stopAudio"
         android:text="Stop"
         android:textColor="@android:color/white"/>
 
@@ -58,6 +60,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/stop_button"
         android:background="@color/colorPrimary"
+        android:onClick="playAudio"
         android:text="Play"
         android:textColor="@android:color/white"/>
 
