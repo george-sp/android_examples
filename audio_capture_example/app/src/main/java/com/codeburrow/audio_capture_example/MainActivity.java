@@ -75,6 +75,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void stopAudio(View view) {
+        // Stops recording.
+        mMediaRecorder.stop();
+        // Releases resources associated with this MediaRecorder object.
+        mMediaRecorder.release();
+        mMediaRecorder = null;
+
+        stopButton.setEnabled(false);
+        playButton.setEnabled(true);
+
+        Toast.makeText(MainActivity.this, "Audio recorded successfully", Toast.LENGTH_SHORT).show();
     }
 
     public void playAudio(View view) {
