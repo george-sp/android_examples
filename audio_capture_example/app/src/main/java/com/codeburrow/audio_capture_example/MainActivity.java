@@ -1,5 +1,6 @@
 package com.codeburrow.audio_capture_example;
 
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -88,5 +89,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playAudio(View view) {
+        // Get an instance of a Media Player.
+        MediaPlayer mediaPlayer = new MediaPlayer();
+
+        try {
+            mediaPlayer.setDataSource(outputFile);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        try {
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        mediaPlayer.start();
+
+        Toast.makeText(MainActivity.this, "Playing audio", Toast.LENGTH_SHORT).show();
     }
 }
