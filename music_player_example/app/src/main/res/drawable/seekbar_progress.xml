@@ -25,5 +25,5 @@
 
     <item
         android:id="@android:id/progress"
-        android:drawable="@drawable/seekbar_background"/>
+        android:drawable="@drawable/seekbar_progress_background"/>
 </layer-list>
