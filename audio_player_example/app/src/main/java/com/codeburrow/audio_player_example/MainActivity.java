@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         // Set SeekBar progress.
         seekBar.setProgress((int) timeElapsed);
 
+        // Use a Handler in order to continuously update the SeekBar progress and the time remaining duration.
         durationHandler.postDelayed(updateSeekBarTime, 100);
     }
 
@@ -73,4 +74,28 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public void pause(View view) {
+        // Pause the playback.
+        mMediaPlayer.pause();
+    }
+
+    public void forward(View view) {
+        // Check if we can go forward at forwardTime seconds before song ends.
+        if ((timeElapsed + forwardTime) < finalTime) {
+            timeElapsed = timeElapsed + forwardTime;
+
+            // Seek to the exact second of the track.
+            mMediaPlayer.seekTo((int) timeElapsed);
+        }
+    }
+
+    public void rewind(View view) {
+        // Check if we can go backward at backwardTime seconds.
+        if ((timeElapsed - backwardTime) >= 0) {
+            timeElapsed = timeElapsed - backwardTime;
+
+            // Seek to the exact second of the track.
+            mMediaPlayer.seekTo((int) timeElapsed);
+        }
+    }
 }
