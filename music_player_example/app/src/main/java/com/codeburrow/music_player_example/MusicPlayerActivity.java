@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -163,7 +164,53 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         });
 
         mRepeatButton = (ImageButton) findViewById(R.id.repeat_button);
+        mRepeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isRepeat) {
+                    // Change the image resource of the repeat button.
+                    mRepeatButton.setImageResource(R.drawable.img_btn_repeat);
+                    // Inform user with a Toast.
+                    Toast.makeText(MusicPlayerActivity.this, "Repeat is OFF", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Change the isShuffle flag to false.
+                    isShuffle = false;
+                    // Change the image resources of the repeat and shuffle buttons.
+                    mRepeatButton.setImageResource(R.drawable.img_btn_repeat_pressed);
+                    mShuffleButton.setImageResource(R.drawable.img_btn_shuffle);
+                    // Inform user with a Toast.
+                    Toast.makeText(MusicPlayerActivity.this, "Repeat is ON", Toast.LENGTH_SHORT).show();
+                }
+
+                // Change the isRepeat flag.
+                isRepeat = !isRepeat;
+            }
+        });
+
         mShuffleButton = (ImageButton) findViewById(R.id.shuffle_button);
+        mShuffleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isShuffle){
+                    // Change the image resources of the shuffle button.
+                    mShuffleButton.setImageResource(R.drawable.img_btn_shuffle);
+                    // Inform user with a Toast.
+                    Toast.makeText(MusicPlayerActivity.this, "Shuffle is OFF", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Change the isShuffle flag to false.
+                    isRepeat = false;
+                    // Change the image resources of the repeat and shuffle buttons.
+                    mShuffleButton.setImageResource(R.drawable.img_btn_shuffle_pressed);
+                    mRepeatButton.setImageResource(R.drawable.img_btn_repeat);
+                    // Inform user with a Toast.
+                    Toast.makeText(MusicPlayerActivity.this, "Shuffle is ON", Toast.LENGTH_SHORT).show();
+                }
+
+                // Change the isShuffle flag.
+                isShuffle = !isShuffle;
+            }
+        });
+
         mSongSeekBar = (SeekBar) findViewById(R.id.song_seek_bar);
         mSongTitleTextView = (TextView) findViewById(R.id.song_title_textview);
         mSongCurrentDurationTextView = (TextView) findViewById(R.id.song_current_duration_textview);
