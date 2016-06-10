@@ -87,12 +87,12 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
                         // If so, pause it.
                         mMediaPlayer.pause();
                         // Set the appropriate image resource to play button.
-                        mPlayButton.setImageResource(R.drawable.img_btn_play);
+                        mPlayButton.setImageResource(R.drawable.btn_play);
                     } else {
                         // If it is not playing, resume the song.
                         mMediaPlayer.start();
                         // Set the appropriate image resource to play button.
-                        mPlayButton.setImageResource(R.drawable.img_btn_pause);
+                        mPlayButton.setImageResource(R.drawable.btn_pause);
                     }
                 }
             }
@@ -191,15 +191,15 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
             public void onClick(View v) {
                 if (isRepeat) {
                     // Change the image resource of the repeat button.
-                    mRepeatButton.setImageResource(R.drawable.img_btn_repeat);
+                    mRepeatButton.setImageResource(R.drawable.btn_repeat);
                     // Inform user with a Toast.
                     Toast.makeText(MusicPlayerActivity.this, "Repeat is OFF", Toast.LENGTH_SHORT).show();
                 } else {
                     // Change the isShuffle flag to false.
                     isShuffle = false;
                     // Change the image resources of the repeat and shuffle buttons.
-                    mRepeatButton.setImageResource(R.drawable.img_btn_repeat_pressed);
-                    mShuffleButton.setImageResource(R.drawable.img_btn_shuffle);
+                    mRepeatButton.setImageResource(R.drawable.btn_repeat_pressed);
+                    mShuffleButton.setImageResource(R.drawable.btn_shuffle);
                     // Inform user with a Toast.
                     Toast.makeText(MusicPlayerActivity.this, "Repeat is ON", Toast.LENGTH_SHORT).show();
                 }
@@ -215,15 +215,15 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
             public void onClick(View v) {
                 if (isShuffle) {
                     // Change the image resources of the shuffle button.
-                    mShuffleButton.setImageResource(R.drawable.img_btn_shuffle);
+                    mShuffleButton.setImageResource(R.drawable.btn_shuffle);
                     // Inform user with a Toast.
                     Toast.makeText(MusicPlayerActivity.this, "Shuffle is OFF", Toast.LENGTH_SHORT).show();
                 } else {
                     // Change the isShuffle flag to false.
                     isRepeat = false;
                     // Change the image resources of the repeat and shuffle buttons.
-                    mShuffleButton.setImageResource(R.drawable.img_btn_shuffle_pressed);
-                    mRepeatButton.setImageResource(R.drawable.img_btn_repeat);
+                    mShuffleButton.setImageResource(R.drawable.btn_shuffle_pressed);
+                    mRepeatButton.setImageResource(R.drawable.btn_repeat);
                     // Inform user with a Toast.
                     Toast.makeText(MusicPlayerActivity.this, "Shuffle is ON", Toast.LENGTH_SHORT).show();
                 }
