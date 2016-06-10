@@ -266,6 +266,15 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Remove Runnable from the handler.
+        mHandler.removeCallbacks(mUpdateTimeTask);
+        // Release the Media Player.
+        mMediaPlayer.release();
+    }
+
     /**
      * Play the selected song.
      *
