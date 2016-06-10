@@ -53,7 +53,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
 
     // Seek Forward and Backward Time
     private static final int SEEK_FORWARD_TIME = 5000;
-    private static final int SEEK_BACKWARD_TIE = 5000;
+    private static final int SEEK_BACKWARD_TIME = 5000;
 
     // Song's Index
     private int currentSongIndex = 0;
@@ -76,7 +76,43 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         // Find all buttons from the layout.
         mPlayButton = (ImageButton) findViewById(R.id.play_button);
         mForwardButton = (ImageButton) findViewById(R.id.forward_button);
+        mForwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get current song position.
+                int currentTimePosition = mMediaPlayer.getCurrentPosition();
+                // Calculate the new forward time position.
+                int forwardTimePosition = currentTimePosition + SEEK_FORWARD_TIME;
+                // Check if seek forward time is lesser than song's duration.
+                if (forwardTimePosition <= mMediaPlayer.getDuration()) {
+                    // Fast Forward the song to the forward time position.
+                    mMediaPlayer.seekTo(currentTimePosition + SEEK_FORWARD_TIME);
+                } else {
+                    // Fast Forward to end position.
+                    mMediaPlayer.seekTo(mMediaPlayer.getDuration());
+                }
+            }
+        });
+
         mBackwardButton = (ImageButton) findViewById(R.id.backward_button);
+        mBackwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get current song position.
+                int currentTimePosition = mMediaPlayer.getCurrentPosition();
+                // Calculate the new backward time position.
+                int backwardTimePosition = currentTimePosition - SEEK_BACKWARD_TIME;
+                // Check if seek backward time is greater than 0 sec.
+                if (backwardTimePosition >= 0) {
+                    // Rewind the song to the backward time position.
+                    mMediaPlayer.seekTo(backwardTimePosition);
+                } else {
+                    // Rewind the song to the start of the duration - 0 sec.
+                    mMediaPlayer.seekTo(0);
+                }
+            }
+        });
+
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
 
@@ -126,7 +162,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
      *
      * @param songIndex - Index of song in playlist
      */
-    public void  playSong(int songIndex){
+    public void playSong(int songIndex) {
         try {
             // Play song via Media Player.
             mMediaPlayer.reset();
