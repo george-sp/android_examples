@@ -77,6 +77,27 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
 
         // Find all buttons from the layout.
         mPlayButton = (ImageButton) findViewById(R.id.play_button);
+        mPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if a Media Player exists.
+                if (mMediaPlayer != null) {
+                    // Check if Media Player is playing any song.
+                    if (mMediaPlayer.isPlaying()) {
+                        // If so, pause it.
+                        mMediaPlayer.pause();
+                        // Set the appropriate image resource to play button.
+                        mPlayButton.setImageResource(R.drawable.img_btn_play);
+                    } else {
+                        // If it is not playing, resume the song.
+                        mMediaPlayer.start();
+                        // Set the appropriate image resource to play button.
+                        mPlayButton.setImageResource(R.drawable.img_btn_pause);
+                    }
+                }
+            }
+        });
+
         mForwardButton = (ImageButton) findViewById(R.id.forward_button);
         mForwardButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +250,9 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         mMediaPlayer.setOnCompletionListener(this);
         mSongSeekBar.setOnSeekBarChangeListener(this);
 
+        // By default play the first song.
+        playSong(0);
+
     }
 
     @Override
@@ -287,7 +311,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
 
     /**
      * A Runnable background thread
-     * <p>
+     * <p/>
      * Runs every 100 milliseconds to update the seek bar progress
      */
     private Runnable mUpdateTimeTask = new Runnable() {
