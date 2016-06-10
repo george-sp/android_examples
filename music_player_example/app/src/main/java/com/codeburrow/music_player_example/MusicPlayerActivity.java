@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class MusicPlayerActivity extends AppCompatActivity implements OnCompletionListener, OnSeekBarChangeListener {
 
@@ -191,7 +192,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         mShuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isShuffle){
+                if (isShuffle) {
                     // Change the image resources of the shuffle button.
                     mShuffleButton.setImageResource(R.drawable.img_btn_shuffle);
                     // Inform user with a Toast.
@@ -286,7 +287,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
 
     /**
      * A Runnable background thread
-     * <p/>
+     * <p>
      * Runs every 100 milliseconds to update the seek bar progress
      */
     private Runnable mUpdateTimeTask = new Runnable() {
@@ -310,9 +311,34 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         }
     };
 
+    /**
+     * When the song is completed:
+     * - If Repeat is ON play the same song again
+     * - If Shuffle is ON play a random song
+     *
+     * @param mp - MediaPlayer
+     */
     @Override
     public void onCompletion(MediaPlayer mp) {
+        if (isRepeat) {
+            // Repeat is ON - play the same song again.
+        } else if (isShuffle) {
+            // Shuffle is ON - play a random song.
+            Random random = new Random();
+            currentSongIndex = random.nextInt(mSongsList.size());
+        } else {
+            // Neither repeat nor shuffle are ON - play the next song.
+            if (currentSongIndex < (mSongsList.size() - 1)) {
+                // If the current song is not the last one, play next.
+                currentSongIndex++;
+            } else {
+                // If it is the last song, play the first one.
+                currentSongIndex = 0;
+            }
+        }
 
+        // Play the song at this index.
+        playSong(currentSongIndex);
     }
 
     @Override
