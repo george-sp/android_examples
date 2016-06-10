@@ -17,7 +17,7 @@ public class SongsManager {
     private static final String LOG_TAG = SongsManager.class.getSimpleName();
 
     // SDCard Path
-    private static final String MEDIA_PATH = new String("/sdcard/");
+    private static final String MEDIA_PATH = new String("/sdcard/Music/");
     private ArrayList<HashMap<String, String>> songsList = new ArrayList<>();
 
     // Constructor

@@ -1,13 +1,16 @@
 package com.codeburrow.music_player_example;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener ;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -61,6 +64,9 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
     // List with Songs
     private ArrayList<HashMap<String, String>> mSongsList = new ArrayList<>();
 
+    // Request Code for the Playlist Activity
+    private static final int PLAYLIST_ACTIVITY_REQUEST_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +78,16 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         mBackwardButton = (ImageButton) findViewById(R.id.backward_button);
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
+
         mPlaylistButton = (ImageButton) findViewById(R.id.playlist_button);
+        mPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playlistIntent = new Intent(MusicPlayerActivity.this, PlaylistActivity.class);
+                startActivityForResult(playlistIntent, PLAYLIST_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
         mRepeatButton = (ImageButton) findViewById(R.id.repeat_button);
         mShuffleButton = (ImageButton) findViewById(R.id.shuffle_button);
         mSongSeekBar = (SeekBar) findViewById(R.id.song_seek_bar);
@@ -91,6 +106,19 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         // Listeners
         mMediaPlayer.setOnCompletionListener(this);
         mSongSeekBar.setOnSeekBarChangeListener(this);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == PLAYLIST_ACTIVITY_REQUEST_CODE) {
+            currentSongIndex = data.getExtras().getInt("songIndex");
+            // Play the selected song.
+            Log.e(LOG_TAG, "Current Song Index: " + String.valueOf(currentSongIndex));
+        }
+
     }
 
     @Override

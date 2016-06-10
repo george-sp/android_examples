@@ -10,9 +10,9 @@
 
     <TextView
         android:id="@+id/songTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:color="@color/colorTextPlaylist"
+        android:textColor="@color/colorTextPlaylist"
         android:padding="@dimen/medium_padding"
         android:textSize="@dimen/medium_text_size"/>
 
