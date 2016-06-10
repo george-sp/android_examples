@@ -220,7 +220,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
             mSongSeekBar.setMax(100);
 
             // Update seek bar.
-
+            updateSeekBarProgress();
         } catch (IllegalArgumentException e) {
             Log.e(LOG_TAG, e.getMessage());
         } catch (IllegalStateException e) {
@@ -229,6 +229,39 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
             Log.e(LOG_TAG, e.getMessage());
         }
     }
+
+    /**
+     * Update timer / progress on seek bar
+     */
+    private void updateSeekBarProgress() {
+        mHandler.postDelayed(mUpdateTimeTask, 100);
+    }
+
+    /**
+     * A Runnable background thread
+     * <p/>
+     * Runs every 100 milliseconds to update the seek bar progress
+     */
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            // Get current and total durations.
+            long totalDuration = mMediaPlayer.getDuration();
+            long currentDuration = mMediaPlayer.getCurrentPosition();
+
+            // Display total duration time.
+            mSongTotalDurationTextView.setText(mUtilities.milliSecondsToTimer(totalDuration));
+
+            // Display current time - time played.
+            mSongCurrentDurationTextView.setText(mUtilities.milliSecondsToTimer(currentDuration));
+
+            // Update seek bar's progress.
+            int progress = mUtilities.getProgressPercentage(currentDuration, totalDuration);
+            mSongSeekBar.setProgress(progress);
+
+            // Schedule to run this runnable after 100 milliseconds.
+            mHandler.postDelayed(this, 100);
+        }
+    };
 
     @Override
     public void onCompletion(MediaPlayer mp) {
@@ -240,14 +273,32 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
 
     }
 
+    /**
+     * When user starts moving the progress handler.
+     */
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        // Remove Runnable from the handler.
+        mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
+    /**
+     * When user stops moving the progress handler.
+     */
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        // Remove Runnable from the handler.
+        mHandler.removeCallbacks(mUpdateTimeTask);
 
+        // Get total duration and current position.
+        int totalDuration = mMediaPlayer.getDuration();
+        int currentPosition = mUtilities.progressToTimer(seekBar.getProgress(), totalDuration);
+
+        // Move forward or backward to the new current position.
+        mMediaPlayer.seekTo(currentPosition);
+
+        // Update seek bar progress - timer.
+        updateSeekBarProgress();
     }
 
 }
