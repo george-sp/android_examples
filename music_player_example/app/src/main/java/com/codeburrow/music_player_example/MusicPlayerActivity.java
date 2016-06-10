@@ -114,7 +114,44 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         });
 
         mNextButton = (ImageButton) findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if there is next song.
+                if (currentSongIndex < (mSongsList.size() - 1)) {
+                    // Play the next song.
+                    playSong(currentSongIndex + 1);
+                    // Move current song index.
+                    currentSongIndex++;
+                } else {
+                    // Else start from the beginning.
+                    // Play the first song.
+                    playSong(0);
+                    // Move current song index.
+                    currentSongIndex = 0;
+                }
+            }
+        });
+
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if this is not the first song.
+                if (currentSongIndex > 0) {
+                    // Play the previous  song.
+                    playSong(currentSongIndex - 1);
+                    // Move current song index.
+                    currentSongIndex--;
+                } else {
+                    // Else start from the end.
+                    // Play the last song.
+                    playSong(mSongsList.size() - 1);
+                    // Move current song index.
+                    currentSongIndex = mSongsList.size() - 1;
+                }
+            }
+        });
 
         mPlaylistButton = (ImageButton) findViewById(R.id.playlist_button);
         mPlaylistButton.setOnClickListener(new View.OnClickListener() {
@@ -212,4 +249,5 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
 }
