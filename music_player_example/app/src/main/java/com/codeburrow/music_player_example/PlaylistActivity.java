@@ -49,7 +49,7 @@ public class PlaylistActivity extends ListActivity {
         // Add menuItems to ListView.
         ListAdapter adapter = new SimpleAdapter(this, songsListData,
                 R.layout.playlist_item, new String[]{"songTitle"}, new int[]{
-                R.id.songTitle});
+                R.id.song_title});
 
         setListAdapter(adapter);
 

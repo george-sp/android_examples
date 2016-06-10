@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -91,7 +92,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         mRepeatButton = (ImageButton) findViewById(R.id.repeat_button);
         mShuffleButton = (ImageButton) findViewById(R.id.shuffle_button);
         mSongSeekBar = (SeekBar) findViewById(R.id.song_seek_bar);
-        mSongTitleTextView = (TextView) findViewById(R.id.songTitle);
+        mSongTitleTextView = (TextView) findViewById(R.id.song_title_textview);
         mSongCurrentDurationTextView = (TextView) findViewById(R.id.song_current_duration_textview);
         mSongTotalDurationTextView = (TextView) findViewById(R.id.song_total_duration_textview);
 
@@ -116,9 +117,44 @@ public class MusicPlayerActivity extends AppCompatActivity implements OnCompleti
         if (resultCode == PLAYLIST_ACTIVITY_REQUEST_CODE) {
             currentSongIndex = data.getExtras().getInt("songIndex");
             // Play the selected song.
-            Log.e(LOG_TAG, "Current Song Index: " + String.valueOf(currentSongIndex));
+            playSong(currentSongIndex);
         }
+    }
 
+    /**
+     * Play the selected song.
+     *
+     * @param songIndex - Index of song in playlist
+     */
+    public void  playSong(int songIndex){
+        try {
+            // Play song via Media Player.
+            mMediaPlayer.reset();
+            mMediaPlayer.setDataSource(mSongsList.get(songIndex).get("songPath"));
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+
+            // Display song's title.
+            String songTitle = mSongsList.get(songIndex).get("songTitle");
+            Log.e(LOG_TAG, "Song's title: " + songTitle);
+            mSongTitleTextView.setText(songTitle);
+
+            // Change button's image to pause image.
+            mPlayButton.setImageResource(R.drawable.btn_pause);
+
+            // Set seek bar max and progress values.
+            mSongSeekBar.setProgress(0);
+            mSongSeekBar.setMax(100);
+
+            // Update seek bar.
+
+        } catch (IllegalArgumentException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        } catch (IllegalStateException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 
     @Override
