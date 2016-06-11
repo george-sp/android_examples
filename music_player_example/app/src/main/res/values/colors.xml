@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- Player -->
+    <color name="colorBackgroundPlayer">#424242</color>
+    <color name="colorTextPlayerHeader">#04b3d2</color>
+    <color name="colorTextPlayerCurrentDuration">#eeeeee</color>
+    <color name="colorTextPlayerTotalDuration">#04cbde</color>
+
+    <!-- Playlist -->
+    <color name="colorBackgroundPlaylist">#333333</color>
+    <color name="colorDividerPlaylist">#242424</color>
+    <color name="colorTextPlaylist">#f3f3f3</color>
+</resources>
