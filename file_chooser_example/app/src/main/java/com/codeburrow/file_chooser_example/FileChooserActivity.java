@@ -3,7 +3,6 @@ package com.codeburrow.file_chooser_example;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,13 +59,7 @@ public class FileChooserActivity extends ListActivity {
         // Add files array list to the folders(array list).
         folders.addAll(files);
 
-        // An array list for debugging.
-        ArrayList<String> directoriesNames = new ArrayList<>();
-        for (Properties properties : folders) {
-            directoriesNames.add(properties.getName());
-        }
-
-        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, directoriesNames));
+        setListAdapter(new FileArrayAdapter(this, folders));
 
         if (!file.getName().equalsIgnoreCase("sdcard"))
             folders.add(0, new Properties("..", "Parent Directory", file.getParent()));
