@@ -9,13 +9,16 @@ package com.codeburrow.sqlite_database_example;
  */
 /**
  * A class to manipulate single contact as an object.
+ *
+ * The Data Access Object is basically an object or an interface
+ * that provides access to an underlying database or any other persistence storage.
  */
-public class Contact {
+public class ContactDAO {
 
-    private static final String LOG_TAG = Contact.class.getSimpleName();
+    private static final String LOG_TAG = ContactDAO.class.getSimpleName();
 
     /*
-     * Contact's variables
+     * ContactDAO's variables
      */
     private int id;
     private String name;
@@ -24,13 +27,13 @@ public class Contact {
     /*
      * Empty Constructor
      */
-    public Contact() {
+    public ContactDAO() {
     }
 
     /*
      * Constructor - without id variable
      */
-    public Contact(String name, String phoneNumber) {
+    public ContactDAO(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
@@ -38,7 +41,7 @@ public class Contact {
     /*
      * Constructor - all variables
      */
-    public Contact(int id, String name, String phoneNumber) {
+    public ContactDAO(int id, String name, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
