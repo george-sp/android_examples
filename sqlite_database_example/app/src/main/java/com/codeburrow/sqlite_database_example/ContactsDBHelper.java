@@ -2,6 +2,7 @@ package com.codeburrow.sqlite_database_example;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -89,6 +90,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
         long insertResult = sqLiteDatabase.insert(ContactsEntry.TABLE_NAME, null, contentValues);
         // Close SQLiteDatabase connection.
         sqLiteDatabase.close();
+        // Return the result of the query.
         return insertResult;
     }
 
@@ -99,7 +101,33 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
      * @return A Contact Data Access Object.
      */
     public ContactDAO readContact(int id) {
-        return new ContactDAO();
+        // Instantiate an empty ContactDAO.
+        ContactDAO contact = new ContactDAO();
+        // Create and/or open a database.
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        //Query the given table, returning a Cursor over the result set.
+        Cursor cursor = sqLiteDatabase.query(
+                ContactsEntry.TABLE_NAME,
+                new String[]{ContactsEntry.COLUMN_ID, ContactsEntry.COLUMN_NAME, ContactsEntry.COLUMN_PHONE_NUMBER},
+                ContactsEntry.COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null,
+                null
+        );
+        if (cursor != null) {
+            // Move the cursor to the first row.
+            cursor.moveToFirst();
+            // Get contact attributes.
+            int contactId = Integer.parseInt(cursor.getString(0));
+            String contactName = cursor.getString(1);
+            String contactPhoneNumber= cursor.getString(2);
+            // Create a ContactDAO object.
+            contact = new ContactDAO(contactId, contactName, contactPhoneNumber);
+        }
+        // Return the queried Contact.
+        return contact;
     }
 
     /**
