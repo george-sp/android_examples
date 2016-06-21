@@ -1,5 +1,6 @@
 package com.codeburrow.sqlite_database_example;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.add_contact:
                 // Start the AddContact Activity.
+                startActivity(new Intent(MainActivity.this, AddContactActivity.class));
                 return true;
             default:
                 return false;
