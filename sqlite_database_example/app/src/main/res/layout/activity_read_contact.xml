@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codeburrow.sqlite_database_example.AddContactActivity">
+    tools:context="com.codeburrow.sqlite_database_example.ReadContactActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,11 +15,29 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
-            android:id="@+id/name_text_view"
+            android:id="@+id/id_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:minHeight="48dp"
+            android:text="Enter ID"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp"/>
+
+        <EditText
+            android:id="@+id/id_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_text_view"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_edit_text"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:minHeight="48dp"
             android:text="NAME"
@@ -31,6 +49,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name_text_view"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:enabled="false"
+            android:text="DISPLAY NAME HERE"
             android:textSize="30sp"/>
 
         <TextView
@@ -50,6 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/phone_number_text_view"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:enabled="false"
+            android:text="DISPLAY PHONE NUMBER HERE"
             android:textSize="30sp"/>
 
         <Button
@@ -59,8 +82,8 @@
             android:layout_below="@+id/phone_number_edit_text"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@color/colorPrimary"
-            android:onClick="addContact"
-            android:text="ADD CONTACT"
+            android:onClick="readContact"
+            android:text="READ CONTACT"
             android:textColor="@android:color/white"
             android:textSize="30sp"/>
 

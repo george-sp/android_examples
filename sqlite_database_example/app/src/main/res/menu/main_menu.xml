@@ -4,5 +4,8 @@
     <item
         android:id="@+id/add_contact"
         android:title="Add Contact"/>
+    <item
+        android:id="@+id/read_contact"
+        android:title="Read Contact"/>
 
 </menu>

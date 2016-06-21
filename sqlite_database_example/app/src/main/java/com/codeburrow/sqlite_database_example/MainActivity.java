@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
                 // Start the AddContact Activity.
                 startActivity(new Intent(MainActivity.this, AddContactActivity.class));
                 return true;
+            case R.id.read_contact:
+                // Start the ReadContact Activity.
+                startActivity(new Intent(MainActivity.this, ReadContactActivity.class));
+                return true;
             default:
                 return false;
         }
