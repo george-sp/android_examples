@@ -15,28 +15,11 @@
         tools:context="com.codeburrow.sqlite_database_example.AddContactActivity">
 
         <TextView
-            android:id="@+id/id_text_view"
+            android:id="@+id/name_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:minHeight="48dp"
-            android:text="ID"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp"/>
-
-        <EditText
-            android:id="@+id/id_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/id_text_view"
-            android:textSize="30sp"/>
-
-        <TextView
-            android:id="@+id/name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/id_edit_text"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:minHeight="48dp"
             android:text="NAME"
@@ -76,6 +59,7 @@
             android:layout_below="@+id/phone_number_edit_text"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@color/colorPrimary"
+            android:onClick="addContact"
             android:text="ADD CONTACT"
             android:textColor="@android:color/white"
             android:textSize="30sp"/>

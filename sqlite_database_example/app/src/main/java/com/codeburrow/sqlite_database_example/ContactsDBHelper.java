@@ -1,5 +1,6 @@
 package com.codeburrow.sqlite_database_example;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -40,7 +41,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // The SQL statement to create the Contacts table.
-        final String SQL_CREATE_CONTACTS_TABLE = "CREATE TABLE" +
+        final String SQL_CREATE_CONTACTS_TABLE = "CREATE TABLE " +
                 ContactsEntry.TABLE_NAME + " (" +
                 ContactsEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 ContactsEntry.COLUMN_NAME + " TEXT, " +
@@ -75,7 +76,20 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
      * @return The row ID of the newly inserted row, or -1 if an error occurred.
      */
     public long createContact(ContactDAO contact) {
-        return -1;
+        // Create and/or open a database that will be used for reading and writing.
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        // Use ContentValues object to store sets of values
+        // that the ContentResolver can process.
+        ContentValues contentValues = new ContentValues();
+        // Put Contact Name into contentValues.
+        contentValues.put(ContactsEntry.COLUMN_NAME, contact.getName());
+        // Put Contact Phone Number into contentValues.
+        contentValues.put(ContactsEntry.COLUMN_PHONE_NUMBER, contact.getPhoneNumber());
+        // Insert Row-Contact into SQLiteDatabase.
+        long insertResult = sqLiteDatabase.insert(ContactsEntry.TABLE_NAME, null, contentValues);
+        // Close SQLiteDatabase connection.
+        sqLiteDatabase.close();
+        return insertResult;
     }
 
     /**
