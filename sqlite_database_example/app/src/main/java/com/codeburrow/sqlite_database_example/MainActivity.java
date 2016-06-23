@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list_view);
         // Initialize ContactsDBHelper.
         contactsDBHelper = new ContactsDBHelper(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         // Read All Contacts.
         mContactsList = contactsDBHelper.readAllContacts();
         // Initialize an ArrayList to store the contacts' names.
