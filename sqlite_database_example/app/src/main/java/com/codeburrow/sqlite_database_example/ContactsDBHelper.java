@@ -126,6 +126,10 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
             // Create a ContactDAO object.
             contact = new ContactDAO(contactId, contactName, contactPhoneNumber);
         }
+        // Closes the Cursor, releasing all of its resources and making it completely invalid.
+        cursor.close();
+        // Close SQLiteDatabase connection.
+        sqLiteDatabase.close();
         // Return the queried Contact.
         return contact;
     }
@@ -179,6 +183,10 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
                 );
             } while (cursor.moveToNext());
         }
+        // Closes the Cursor, releasing all of its resources and making it completely invalid.
+        cursor.close();
+        // Close SQLiteDatabase connection.
+        sqLiteDatabase.close();
         // Return the ArrayList with the ContactsList.
         return contactsList;
     }

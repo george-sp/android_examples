@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         for (ContactDAO contact : mContactsList) {
             contatsName.add(contact.getName());
         }
-        // Set an ArrayAdapter to the ListView. 
+        // Set an ArrayAdapter to the ListView.
         mListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contatsName));
     }
 
