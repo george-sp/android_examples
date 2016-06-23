@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,13 +39,15 @@ public class MainActivity extends AppCompatActivity {
         // Read All Contacts.
         mContactsList = contactsDBHelper.readAllContacts();
         // Initialize an ArrayList to store the contacts' names.
-        ArrayList<String> contatsName = new ArrayList<>();
+        ArrayList<String> contactsName = new ArrayList<>();
         // Fill the above ArrayList.
         for (ContactDAO contact : mContactsList) {
-            contatsName.add(contact.getName());
+            contactsName.add(contact.getName());
         }
         // Set an ArrayAdapter to the ListView.
-        mListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contatsName));
+        mListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contactsName));
+        // Display the number of contacts to the user.
+        Toast.makeText(MainActivity.this, "Number Of Contacts: " + contactsDBHelper.countContacts(), Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -197,6 +197,19 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
      * @return The number of rows - stored contacts.
      */
     public int countContacts() {
-        return 0;
+        // Query the SQLiteDatabase with a 'SELECT ALL' statement.
+        String countQuery = "SELECT * FROM " + ContactsEntry.TABLE_NAME;
+        // Create and/or open a database.
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        // Runs the provided SQL and returns a Cursor over the result set.
+        Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
+        // Get the number of contacts in the SQLiteDatabase.
+        int numberOfContacts = cursor.getCount();
+        // Closes the Cursor, releasing all of its resources and making it completely invalid.
+        cursor.close();
+        // Close SQLiteDatabase connection.
+        sqLiteDatabase.close();
+        // Return the number of contacts.
+        return numberOfContacts;
     }
 }
