@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 // Start the ReadContact Activity.
                 startActivity(new Intent(MainActivity.this, ReadContactActivity.class));
                 return true;
+            case R.id.delete_contact:
+                // Start the ReadContact Activity.
+                startActivity(new Intent(MainActivity.this, DeleteContactActivity.class));
+                return true;
             default:
                 return false;
         }

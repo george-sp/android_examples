@@ -165,8 +165,15 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
      * @param contact
      * @return The number of rows affected if a whereClause is passed in, 0 otherwise.
      */
-    public int deleteContact(ContactDAO contact) {
-        return 0;
+    public int deleteContact(int id) {
+        // Create and/or open a database that will be used for reading and writing.
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        // Convenience method for deleting rows in the database.
+        int deleteResult = sqLiteDatabase.delete(ContactsEntry.TABLE_NAME, ContactsEntry.COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        // Close SQLiteDatabase connection.
+        sqLiteDatabase.close();
+        // Return the result of the delete statement.
+        return deleteResult;
     }
 
     /**

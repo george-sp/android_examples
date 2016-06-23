@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".UpdateContactActivity">
         </activity>
+        <activity android:name=".DeleteContactActivity">
+        </activity>
     </application>
 
 </manifest>

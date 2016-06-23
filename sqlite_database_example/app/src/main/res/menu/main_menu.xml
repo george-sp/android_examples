@@ -7,5 +7,8 @@
     <item
         android:id="@+id/read_contact"
         android:title="Read Contact"/>
+    <item
+        android:id="@+id/delete_contact"
+        android:title="Delete Contact"/>
 
 </menu>
