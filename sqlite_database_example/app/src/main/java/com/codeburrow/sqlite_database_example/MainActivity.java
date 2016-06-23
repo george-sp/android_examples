@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ContactDAO> mContactsList;
     // Database Helper to manage the SQLiteDatabase.
     private ContactsDBHelper contactsDBHelper;
+    // The name of the extra data.
+    public static final String CONTACT_EXTRA_KEY = "contact";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
         }
         // Set an ArrayAdapter to the ListView.
         mListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contactsName));
+        // Set a Click listener to the ListView's items.
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Instantiate an Intent to the UpdateContact Activity.
+                Intent updateActivityIntent = new Intent(MainActivity.this, UpdateContactActivity.class);
+                // Put Contact object as extra.
+                updateActivityIntent.putExtra(CONTACT_EXTRA_KEY, mContactsList.get(i));
+                // Start the UpdateContact Activity.
+                startActivity(updateActivityIntent);
+            }
+        });
         // Display the number of contacts to the user.
         Toast.makeText(MainActivity.this, "Number Of Contacts: " + contactsDBHelper.countContacts(), Toast.LENGTH_LONG).show();
     }

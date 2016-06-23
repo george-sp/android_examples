@@ -141,7 +141,21 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
      * @return The number of rows affected.
      */
     public int updateContact(ContactDAO contact) {
-        return 0;
+        // Create and/or open a database that will be used for reading and writing.
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        // Use ContentValues object to store sets of values
+        // that the ContentResolver can process.
+        ContentValues contentValues = new ContentValues();
+        // Put Contact Name into contentValues.
+        contentValues.put(ContactsEntry.COLUMN_NAME, contact.getName());
+        // Put Contact Phone Number into contentValues.
+        contentValues.put(ContactsEntry.COLUMN_PHONE_NUMBER, contact.getPhoneNumber());
+        // Convenience method for updating rows in the database.
+        int updateResult = sqLiteDatabase.update(ContactsEntry.TABLE_NAME, contentValues, ContactsEntry.COLUMN_ID + " = ?", new String[]{String.valueOf(contact.getId())});
+        // Close SQLiteDatabase connection.
+        sqLiteDatabase.close();
+        // Return the result of the update statement.
+        return updateResult;
     }
 
     /**

@@ -7,13 +7,16 @@ package com.codeburrow.sqlite_database_example;
  * ---------->    http://codeburrow.com    <----------
  * ===================================================
  */
+
+import java.io.Serializable;
+
 /**
  * A class to manipulate single contact as an object.
  *
  * The Data Access Object is basically an object or an interface
  * that provides access to an underlying database or any other persistence storage.
  */
-public class ContactDAO {
+public class ContactDAO implements Serializable{
 
     private static final String LOG_TAG = ContactDAO.class.getSimpleName();
 
