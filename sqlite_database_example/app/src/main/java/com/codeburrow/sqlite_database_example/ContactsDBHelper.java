@@ -105,7 +105,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
         ContactDAO contact = new ContactDAO();
         // Create and/or open a database.
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        //Query the given table, returning a Cursor over the result set.
+        // Query the given table, returning a Cursor over the result set.
         Cursor cursor = sqLiteDatabase.query(
                 ContactsEntry.TABLE_NAME,
                 new String[]{ContactsEntry.COLUMN_ID, ContactsEntry.COLUMN_NAME, ContactsEntry.COLUMN_PHONE_NUMBER},
@@ -122,7 +122,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
             // Get contact attributes.
             int contactId = Integer.parseInt(cursor.getString(0));
             String contactName = cursor.getString(1);
-            String contactPhoneNumber= cursor.getString(2);
+            String contactPhoneNumber = cursor.getString(2);
             // Create a ContactDAO object.
             contact = new ContactDAO(contactId, contactName, contactPhoneNumber);
         }
@@ -157,7 +157,30 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
      * @return A List with the ContactDAO objects.
      */
     public ArrayList<ContactDAO> readAllContacts() {
-        return new ArrayList<>();
+        // Instantiate an empty ArrayList to store the ContactDAO objects.
+        ArrayList<ContactDAO> contactsList = new ArrayList<>();
+        // Query the SQLiteDatabase with a 'SELECT ALL' statement.
+        String selectAllQuery = "SELECT * FROM " + ContactsEntry.TABLE_NAME;
+        // Create and/or open a database.
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        // Runs the provided SQL and returns a Cursor over the result set.
+        Cursor cursor = sqLiteDatabase.rawQuery(selectAllQuery, null);
+        // Move the cursor to the first row.
+        if (cursor.moveToFirst()) {
+            // Loop through all cursor's rows.
+            do {
+                // Add contact to the ArrayList.
+                contactsList.add(
+                        new ContactDAO(
+                                Integer.parseInt(cursor.getString(0)),
+                                cursor.getString(1),
+                                cursor.getString(2)
+                        )
+                );
+            } while (cursor.moveToNext());
+        }
+        // Return the ArrayList with the ContactsList.
+        return contactsList;
     }
 
     /**
