@@ -101,6 +101,25 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(takePictureIntent, TAKE_PICTURE_REQUEST_CODE);
     }
 
+    public void recordVideo(View view) {
+        // An intent that request the in-build camera app to record a video.
+        Intent recordVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        /*
+         * Set Video Quality.
+         *
+         * This is an integer property.
+         * Currently value 0 means low quality, suitable for MMS messages,
+         * and value 1 means high quality.
+         */
+        recordVideoIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        // Get the Uri of the image file.
+        mFileUri = Uri.fromFile(getOutputMediaFile(VIDEO_MEDIA_TYPE));
+        // Specify a path where the image will be stored.
+        recordVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
+        // Start the intent.
+        startActivityForResult(recordVideoIntent, RECORD_VIDEO_REQUEST_CODE);
+    }
+
     /**
      * Helper Method.
      * <p/>
