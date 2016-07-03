@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.io.File;
@@ -45,6 +46,25 @@ public class MainActivity extends AppCompatActivity {
 
         mImageView = (ImageView) findViewById(R.id.display_picture_image_view);
         mVideoView = (VideoView) findViewById(R.id.preview_video_video_view);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check if there is a result from the take picture intent.
+        if (requestCode == TAKE_PICTURE_REQUEST_CODE) {
+            // Check if an image is successfully captured.
+            if (resultCode == RESULT_OK) {
+                // Display the captured image.
+            }
+            // Check if image capture is cancelled by the user.
+            else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(MainActivity.this, "Image Capture Cancelled", Toast.LENGTH_SHORT).show();
+            }
+            // The image capture failed.
+            else {
+                Toast.makeText(MainActivity.this, "Image Capture Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
