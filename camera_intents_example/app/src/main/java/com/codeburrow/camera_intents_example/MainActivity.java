@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             // Check if a video is successfully recorded.
             if (resultCode == RESULT_OK) {
                 // Preview the recorded video.
+                previewRecordedVideo();
             }
             // Check if video record is cancelled by the user.
             else if (resultCode == RESULT_CANCELED) {
@@ -175,6 +176,21 @@ public class MainActivity extends AppCompatActivity {
             final Bitmap bitmap = BitmapFactory.decodeFile(mFileUri.getPath(), options);
             // Set the bitmap as the content of the image view.
             mImageView.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+    }
+
+    private void previewRecordedVideo() {
+        try {
+            // Hide the image view.
+            mImageView.setVisibility(View.GONE);
+            // Show the video view.
+            mVideoView.setVisibility(View.VISIBLE);
+            // Set video path.
+            mVideoView.setVideoPath(mFileUri.getPath());
+            // Start playing the recorded view.
+            mVideoView.start();
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
