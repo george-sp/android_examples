@@ -1,11 +1,14 @@
 package com.codeburrow.camera_intents_example;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
@@ -62,6 +65,17 @@ public class MainActivity extends AppCompatActivity {
             // There is no camera on this device.
             return false;
         }
+    }
+
+    public void takePicture(View view) {
+        // An intent that request the in-build camera app to take a picture.
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Get the Uri of the image file.
+        mFileUri = Uri.fromFile(getOutputMediaFile(IMAGE_MEDIA_TYPE));
+        // Specify a path where the image will be stored.
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
+        // Start the intent.
+        startActivityForResult(takePictureIntent, TAKE_PICTURE_REQUEST_CODE);
     }
 
     /**

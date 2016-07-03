@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:onClick="takePicture"
             android:text="Take a Picture"/>
 
         <!-- Record video button -->
