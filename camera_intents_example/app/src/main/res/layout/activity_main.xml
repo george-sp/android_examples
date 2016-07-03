@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:textAlignment="center"
             android:text="Preview"
+            android:textAlignment="center"
             android:textSize="15sp"/>
 
         <!-- To display picture taken. -->
@@ -48,18 +48,17 @@
         <Button
             android:id="@+id/btnCapturePicture"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             android:text="Take a Picture"/>
 
         <!-- Record video button -->
         <Button
             android:id="@+id/btnRecordVideo"
             android:layout_width="0dp"
-
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Record a Video"/>
 
     </LinearLayout>
