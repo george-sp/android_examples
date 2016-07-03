@@ -3,9 +3,16 @@ package com.codeburrow.camera_intents_example;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.VideoView;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Helper Method.
-     *
+     * <p/>
      * Checks if the device has a camera or not.
      * This can be done in two ways:
      * - Define the hardware.camera feature in AndroidManifest
@@ -55,5 +62,42 @@ public class MainActivity extends AppCompatActivity {
             // There is no camera on this device.
             return false;
         }
+    }
+
+    /**
+     * Helper Method.
+     * <p/>
+     * Creates a media file depending on the media type.
+     *
+     * @param mediaType 1 for image, 2 for video.
+     * @return A media file for the captured image/video.
+     */
+    private static File getOutputMediaFile(int mediaType) {
+        // Create a new File instance that represents the directory for the media files of out application.
+        // getExternalStoragePublicDirectory: Get a top-level shared/external storage directory for placing files of a particular type.
+        File cameraIntentsStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), CAMERA_INTENTS_DIRECTORY_NAME);
+        // Test whether the file or directory exists.
+        if (!cameraIntentsStorageDir.exists()) {
+            Log.e(LOG_TAG, "directory doesn't exist");
+            // Create the directory named by this pathname.
+            if (!cameraIntentsStorageDir.mkdirs()) {
+                Log.e(LOG_TAG, "Failed to create " + CAMERA_INTENTS_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name.
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile = null;
+        // Check if the media to be stored is an image.
+        if (mediaType == IMAGE_MEDIA_TYPE) {
+            mediaFile = new File(cameraIntentsStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+        }
+        // Check if the media to be stored is a video.
+        else if (mediaType == VIDEO_MEDIA_TYPE) {
+            mediaFile = new File(cameraIntentsStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
+        }
+
+        return mediaFile;
     }
 }
