@@ -2,6 +2,8 @@ package com.codeburrow.camera_intents_example;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             // Check if an image is successfully captured.
             if (resultCode == RESULT_OK) {
                 // Display the captured image.
+                displayCapturedImage();
             }
             // Check if image capture is cancelled by the user.
             else if (resultCode == RESULT_CANCELED) {
@@ -96,6 +99,51 @@ public class MainActivity extends AppCompatActivity {
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
         // Start the intent.
         startActivityForResult(takePictureIntent, TAKE_PICTURE_REQUEST_CODE);
+    }
+
+    /**
+     * Helper Method.
+     * <p/>
+     * Displays an image from a file path to the image view.
+     */
+    private void displayCapturedImage() {
+        try {
+            // Hide the video view.
+            mVideoView.setVisibility(View.GONE);
+            // Show the image view.
+            mImageView.setVisibility(View.VISIBLE);
+            /*
+             * Create a default Options object,
+             * which if left unchanged will give the same result from the decoder
+             * as if null were passed.
+             */
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            /*
+             * Downsizing image as it throws OutOfMemory Exception for larger images.
+             *
+             * inSampleSize:
+             *              If set to a value > 1,
+             *              requests the decoder to subsample the original image,
+             *              returning a smaller image to save memory.
+             *
+             * The sample size is the number of pixels in either dimension
+             * that correspond to a single pixel in the decoded bitmap.
+             * For example, inSampleSize == 4 returns an image that is
+             * 1/4 the width/height of the original, and 1/16 the number of pixels.
+             * Any value <= 1 is treated the same as 1.
+             *
+             * Note:
+             *      the decoder uses a final value based on powers of 2,
+             *      any other value will be rounded down to the nearest power of 2.
+             */
+            options.inSampleSize = 8;
+            // Decode the file path into a bitmap.
+            final Bitmap bitmap = BitmapFactory.decodeFile(mFileUri.getPath(), options);
+            // Set the bitmap as the content of the image view.
+            mImageView.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 
     /**
