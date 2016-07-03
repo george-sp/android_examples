@@ -68,6 +68,21 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Image Capture Failed", Toast.LENGTH_SHORT).show();
             }
         }
+        // Check if there is a result from the record video intent.
+        else if (requestCode == RECORD_VIDEO_REQUEST_CODE) {
+            // Check if a video is successfully recorded.
+            if (resultCode == RESULT_OK) {
+                // Preview the recorded video.
+            }
+            // Check if video record is cancelled by the user.
+            else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(MainActivity.this, "Video Record Cancelled", Toast.LENGTH_SHORT).show();
+            }
+            // The video record failed.
+            else {
+                Toast.makeText(MainActivity.this, "Video Record Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
