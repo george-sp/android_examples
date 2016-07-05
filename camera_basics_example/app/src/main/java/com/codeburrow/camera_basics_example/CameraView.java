@@ -99,6 +99,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        Log.e(LOG_TAG, "===== surfaceDestroyed =====");
+        surfaceHolder.removeCallback(this);
+        mCamera.stopPreview();
+        mCamera.release();
     }
 
     private void refreshCamera(Camera camera, SurfaceHolder surfaceHolder, int width, int height) {
