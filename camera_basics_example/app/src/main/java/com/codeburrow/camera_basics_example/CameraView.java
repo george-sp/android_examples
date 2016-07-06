@@ -136,7 +136,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             Log.e(LOG_TAG, "Tried to stop a non-existed preview");
         }
 
-        mCamera = camera;
+        setCamera(camera);
         try {
             // Set the Surface to be used for live preview.
             mCamera.setPreviewDisplay(mSurfaceHolder);
@@ -145,5 +145,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         } catch (IOException e) {
             Log.e(LOG_TAG, "CameraView Error on surfaceCreated:\n" + e.getMessage());
         }
+    }
+
+    private void setCamera(Camera camera) {
+        mCamera = camera;
     }
 }
