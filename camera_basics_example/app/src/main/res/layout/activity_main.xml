@@ -21,4 +21,16 @@
         android:minHeight="48dp"
         android:minWidth="48dp"
         android:onClick="switchCameraClicked"/>
+
+    <ImageButton
+        android:id="@+id/take_picture_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@android:drawable/ic_menu_camera"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
+        android:onClick="takePictureClicked"/>
 </RelativeLayout>

@@ -6,6 +6,8 @@
     <uses-feature android:name="android.hardware.camera" />
     <!-- Allows the application to access the camera device. -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Allows the application to write to external storage. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"

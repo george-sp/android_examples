@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Surface;
@@ -14,10 +16,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String STATE_CAMERA_ID = "CameraID";
+    private static final String STORAGE_DIRECTORY_NAME = "Camera Basics Dir";
     private Camera mCamera;
     private CameraView mCameraView;
     private ImageButton mSwitchCameraImageButton;
@@ -99,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Helper Method.
-     * <p/>
+     * <p>
      * Opens a camera based on camera id and
      * and starts/refreshes the preview.
      */
@@ -117,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Heleper Method.
-     * <p/>
+     * <p>
      * Gets the front camera's id, if it exists.
      *
      * @return The camera id of the front facing camera.
@@ -144,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Helper Method.
-     * <p/>
+     * <p>
      * Gets the back camera's id, if it exists.
      *
      * @return The camera id of the back facing camera.
@@ -171,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Helper Method.
-     * <p/>
+     * <p>
      * Ensures the correct orientation of the camera preview.
      *
      * @param activity The activity the camera object belongs to.
@@ -245,9 +255,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void takePictureClicked(View view) {
+        mCamera.takePicture(null, null, this);
+    }
+
     /**
      * Helper Method.
-     * <p/>
+     * <p>
      * Sets the camera id to 0, if mCameraId = null.
      * Otherwise, switches camera id between 0 and 1 (back and front).
      */
@@ -266,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Helper Method.
-     * <p/>
+     * <p>
      * Releases camera and sets mCamera object to null.
      */
     private void releaseCamera() {
@@ -274,5 +288,63 @@ public class MainActivity extends AppCompatActivity {
             mCamera.release();
             mCamera = null;
         }
+    }
+
+    /**
+     * Called when image data is available after a picture is taken.
+     * The format of the data depends on:
+     * - the context of the callback
+     * - Camera.Parameters settings
+     *
+     * @param bytes A byte array of the picture data.
+     * @param camera The Camera service object.
+     */
+    @Override
+    public void onPictureTaken(byte[] bytes, Camera camera) {
+        // Get a File to save the taken picture.
+        File imageFile = getOutputMediaFile();
+        // Check if the image file was created.
+        if (imageFile == null) {
+            Toast.makeText(MainActivity.this, "Failed to create an Image File.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            // Write the image data into the file.
+            FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
+            fileOutputStream.write(bytes);
+            fileOutputStream.close();
+            Toast.makeText(MainActivity.this, "Image saved: " + imageFile.getName(), Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+        // Refresh camera to continue preview.
+        mCameraView.refreshCamera(mCamera);
+    }
+
+    /**
+     * Helper Method.
+     * <p>
+     * Create a media File for saving an image.
+     *
+     * @return The file that the captured image will be saved to.
+     */
+    private File getOutputMediaFile() {
+        // This location works best if you want the created images to be shared between applications.
+        File cameraBasicsStorageDir = new File(Environment.getExternalStorageDirectory(), STORAGE_DIRECTORY_NAME);
+        // Create the storage directory if it does not exist.
+        if (!cameraBasicsStorageDir.exists()) {
+            if (!cameraBasicsStorageDir.mkdir()) {
+                Log.e(LOG_TAG, "Failed to create directory: " + STORAGE_DIRECTORY_NAME);
+                return null;
+            }
+        }
+        // Create a media file name: take the current timeStamp.
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        // Create a new File instance.
+        File mediaFile = new File(cameraBasicsStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+        return mediaFile;
     }
 }
