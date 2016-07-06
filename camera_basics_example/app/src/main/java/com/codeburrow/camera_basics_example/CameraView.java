@@ -44,6 +44,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     public CameraView(Context context, Camera camera) {
         super(context);
+        Log.e(LOG_TAG, "===== CameraView's Constructor =====");
+
         mCamera = camera;
         // Get the SurfaceHolder providing access
         // and control over this SurfaceView's underlying surface.
@@ -68,11 +70,14 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.e(LOG_TAG, "===== surfaceCreated =====");
+
         try {
-            // Set the Surface to be used for live preview.
-            mCamera.setPreviewDisplay(surfaceHolder);
-            // Start capturing and drawing preview frames to the screen.
-            mCamera.startPreview();
+            if (mCamera != null) {
+                // Set the Surface to be used for live preview.
+                mCamera.setPreviewDisplay(surfaceHolder);
+                // Start capturing and drawing preview frames to the screen.
+                mCamera.startPreview();
+            }
         } catch (IOException e) {
             Log.e(LOG_TAG, "CameraView Error on surfaceCreated:\n" + e.getMessage());
         }
@@ -92,9 +97,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
         Log.e(LOG_TAG, "===== surfaceChanged =====");
-        Log.e(LOG_TAG, "format: " + String.valueOf(format) + ", " + "width: " + String.valueOf(width) + ", " + "height: " + String.valueOf(height));
 
-        refreshCamera(mCamera, surfaceHolder, width, height);
+        refreshCamera(mCamera);
     }
 
     /**
@@ -108,14 +112,21 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         Log.e(LOG_TAG, "===== surfaceDestroyed =====");
-        surfaceHolder.removeCallback(this);
-        mCamera.stopPreview();
+
+        try {
+            // Stop capturing and drawing preview frames to the surface,
+            // and resets the camera for a future call to startPreview().
+            mCamera.stopPreview();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Tried to stop a non-existed preview");
+        }
         mCamera.release();
     }
 
-    private void refreshCamera(Camera camera, SurfaceHolder surfaceHolder, int width, int height) {
+    protected void refreshCamera(Camera camera) {
+        Log.e(LOG_TAG, "=== refreshCamera ===");
         // Check if preview surface exists.
-        if (surfaceHolder.getSurface() == null) return;
+        if (mSurfaceHolder.getSurface() == null) return;
 
         try {
             // Stop capturing and drawing preview frames to the surface,
@@ -125,9 +136,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             Log.e(LOG_TAG, "Tried to stop a non-existed preview");
         }
 
+        mCamera = camera;
         try {
             // Set the Surface to be used for live preview.
-            mCamera.setPreviewDisplay(surfaceHolder);
+            mCamera.setPreviewDisplay(mSurfaceHolder);
             // Start capturing and drawing preview frames to the screen.
             mCamera.startPreview();
         } catch (IOException e) {

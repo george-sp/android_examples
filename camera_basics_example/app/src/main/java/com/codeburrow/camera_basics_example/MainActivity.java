@@ -13,10 +13,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Camera mCamera;
     private CameraView mCameraView;
+    private FrameLayout mCameraViewFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(LOG_TAG, "----- onCreate -----");
+
         setContentView(R.layout.activity_main);
 
         /*
@@ -26,23 +29,38 @@ public class MainActivity extends AppCompatActivity {
          */
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        try{
-            // You can use open(int) to use different cameras.
-            mCamera = Camera.open();
-        } catch (Exception e){
-            Log.e(LOG_TAG, "Failed to get camera: " + e.getMessage());
-        }
+        // Find the FrameLayout in the activity's layout.
+        mCameraViewFrameLayout = (FrameLayout) findViewById(R.id.camera_view_frame_layout);
+        // Create a SurfaceView to show camera data.
+        mCameraView = new CameraView(this, mCamera);
+        // Add the SurfaceView to the FrameLayout.
+        mCameraViewFrameLayout.addView(mCameraView);
+    }
 
-        if(mCamera != null) {
-            // Create a SurfaceView to show camera data.
-            mCameraView = new CameraView(this, mCamera);
-            // Find the FrameLayout in the activity's layout.
-            FrameLayout frameLayout = (FrameLayout)findViewById(R.id.camera_view_frame_layout);
-            // Add the SurfaceView to the FrameLayout.
-            frameLayout.addView(mCameraView);
-        } else {
-            Log.e(LOG_TAG, "Failed to create the SurfaceView");
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(LOG_TAG, "----- onResume -----");
 
+        if (mCamera == null) {
+            try {
+                // You can use open(int) to use different cameras.
+                mCamera = Camera.open(0);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Failed to get camera: " + e.getMessage());
+            }
+            mCameraView.refreshCamera(mCamera);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(LOG_TAG, "----- onPause -----");
+
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
+        }
     }
 }
