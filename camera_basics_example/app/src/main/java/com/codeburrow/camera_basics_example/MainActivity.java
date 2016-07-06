@@ -1,11 +1,13 @@
 package com.codeburrow.camera_basics_example;
 
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e(LOG_TAG, "Failed to get camera: " + e.getMessage());
         }
         mCameraView.refreshCamera(mCamera);
+        setCameraDisplayOrientation(this, mCameraId, mCamera);
     }
 
     /**
@@ -149,6 +152,67 @@ public class MainActivity extends AppCompatActivity {
         }
         // Return the cameraId.
         return backCameraId;
+    }
+
+    /**
+     * Helper Method.
+     * <p/>
+     * Ensures the correct orientation of the camera preview.
+     *
+     * @param activity The activity the camera object belongs to.
+     * @param cameraId The id of the camera (0 or 1 / back or front).
+     * @param camera   The camera object used for the preview.
+     */
+    private void setCameraDisplayOrientation(Activity activity, int cameraId, Camera camera) {
+        // CameraInfo class can carry information about a camera.
+        CameraInfo cameraInfo = new CameraInfo();
+        // Get information about a particular camera.
+        Camera.getCameraInfo(cameraId, cameraInfo);
+
+        /*
+         * getWindowManager:     Retrieve the WindowManager for showing custom windows.
+         * getDefaultDisplay:    Returns the Display upon which this WindowManager instance
+         *                       will create new windows.
+         * getRotation:          Returns the rotation of the screen
+         *                       from its "natural" orientation.
+         */
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
+        // Get the degrees of the current Surface rotation.
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degrees = 0;
+                break;
+            case Surface.ROTATION_90:
+                degrees = 90;
+                break;
+            case Surface.ROTATION_180:
+                degrees = 180;
+                break;
+            case Surface.ROTATION_270:
+                degrees = 270;
+                break;
+        }
+
+        /*
+         * int resultDegrees:
+         *              The angle that the picture will be rotated clockwise.
+         * Valid Values: 0, 90, 180, 270
+         */
+        int resultDegrees;
+        // If the front-facing camera is used.
+        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            resultDegrees = (cameraInfo.orientation + degrees) % 360;
+            // Compensate the mirror.
+            resultDegrees = (360 - resultDegrees) % 360;
+        }
+        // If the back-facing camera is used.
+        else {
+            resultDegrees = (cameraInfo.orientation - degrees + 360) % 360;
+        }
+        // Set the clockwise rotation of preview display in degrees.
+        camera.setDisplayOrientation(resultDegrees);
     }
 
     public void switchCameraClicked(View view) {
