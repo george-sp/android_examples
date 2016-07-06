@@ -17,10 +17,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
+    private static final String STATE_CAMERA_ID = "CameraID";
     private Camera mCamera;
     private CameraView mCameraView;
-    private FrameLayout mCameraViewFrameLayout;
     private ImageButton mSwitchCameraImageButton;
     private int mCameraId = -1;
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         // Set mCameraId to the back camera id by default.
         switchCameraId();
         // Find the FrameLayout in the activity's layout.
-        mCameraViewFrameLayout = (FrameLayout) findViewById(R.id.camera_view_frame_layout);
+        FrameLayout mCameraViewFrameLayout = (FrameLayout) findViewById(R.id.camera_view_frame_layout);
         // Create a SurfaceView to show camera data.
         mCameraView = new CameraView(this, mCamera);
         // Add the SurfaceView to the FrameLayout.
@@ -80,6 +79,22 @@ public class MainActivity extends AppCompatActivity {
         Log.e(LOG_TAG, "----- onPause -----");
 
         releaseCamera();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.e(LOG_TAG, "----- onSaveInstanceState -----");
+
+        savedInstanceState.putInt(STATE_CAMERA_ID, mCameraId);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.e(LOG_TAG, "----- onRestoreInstanceState -----");
+
+        mCameraId = savedInstanceState.getInt(STATE_CAMERA_ID, mCameraId);
     }
 
     /**
