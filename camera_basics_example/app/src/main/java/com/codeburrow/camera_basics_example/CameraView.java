@@ -97,6 +97,14 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         refreshCamera(mCamera, surfaceHolder, width, height);
     }
 
+    /**
+     * This is called immediately before a surface is being destroyed.
+     * After returning from this call, you should no longer try to access this surface.
+     * If you have a rendering thread that directly access the surface,
+     * you must ensure that thread is no longer touching the Surface before returning from this function.
+     *
+     * @param surfaceHolder The SurfaceHolder whose surface is being destroyed.
+     */
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         Log.e(LOG_TAG, "===== surfaceDestroyed =====");
