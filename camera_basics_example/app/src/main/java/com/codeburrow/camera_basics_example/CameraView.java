@@ -7,6 +7,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author George Spiridakis <george@codeburrow.com>
@@ -137,6 +138,22 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         setCamera(camera);
+        // Get the current settings for this Camera settings.
+        Camera.Parameters parameters = mCamera.getParameters();
+        // Get the supported picture sizes.
+        List<Camera.Size> supportedSizes = parameters.getSupportedPictureSizes();
+        // Log the supported picture sizes, for debugging.
+        for (int i = 0; i < supportedSizes.size(); i++) {
+            Log.e(LOG_TAG,"" + i + ": (" + supportedSizes.get(i).width + ", " + supportedSizes.get(i).height + ")");
+        }
+        // Camera.Size: Image size (width and height dimensions).
+        Camera.Size sizePicture = supportedSizes.get(7);
+        // Sets the dimensions for pictures.
+        parameters.setPictureSize(sizePicture.width, sizePicture.height);
+        // Call this when something has changed which has invalidated the layout of this view.
+        requestLayout();
+        // Change the settings for this Camera service.
+        mCamera.setParameters(parameters);
         try {
             // Set the Surface to be used for live preview.
             mCamera.setPreviewDisplay(mSurfaceHolder);

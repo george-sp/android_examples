@@ -4,6 +4,8 @@
 
     <!-- Declares that the application uses the camera hardware. -->
     <uses-feature android:name="android.hardware.camera" />
+    <!-- Declates that the app uses the autofocus feature that the device's camera supports.-->
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
     <!-- Allows the application to access the camera device. -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- Allows the application to write to external storage. -->
