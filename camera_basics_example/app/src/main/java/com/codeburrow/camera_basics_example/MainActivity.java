@@ -2,6 +2,10 @@ package com.codeburrow.camera_basics_example;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PictureCallback;
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Helper Method.
-     * <p>
+     * <p/>
      * Opens a camera based on camera id and
      * and starts/refreshes the preview.
      */
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Heleper Method.
-     * <p>
+     * <p/>
      * Gets the front camera's id, if it exists.
      *
      * @return The camera id of the front facing camera.
@@ -154,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Helper Method.
-     * <p>
+     * <p/>
      * Gets the back camera's id, if it exists.
      *
      * @return The camera id of the back facing camera.
@@ -181,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Helper Method.
-     * <p>
+     * <p/>
      * Ensures the correct orientation of the camera preview.
      *
      * @param activity The activity the camera object belongs to.
@@ -261,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Helper Method.
-     * <p>
+     * <p/>
      * Sets the camera id to 0, if mCameraId = null.
      * Otherwise, switches camera id between 0 and 1 (back and front).
      */
@@ -280,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Helper Method.
-     * <p>
+     * <p/>
      * Releases camera and sets mCamera object to null.
      */
     private void releaseCamera() {
@@ -296,11 +300,11 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
      * - the context of the callback
      * - Camera.Parameters settings
      *
-     * @param bytes A byte array of the picture data.
+     * @param data   A byte array of the picture data.
      * @param camera The Camera service object.
      */
     @Override
-    public void onPictureTaken(byte[] bytes, Camera camera) {
+    public void onPictureTaken(byte[] data, Camera camera) {
         // Get a File to save the taken picture.
         File imageFile = getOutputMediaFile();
         // Check if the image file was created.
@@ -309,10 +313,31 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
             return;
         }
         try {
-            // Write the image data into the file.
+            /*
+             * A file output stream is an output stream for writing data
+             * to a File or to a FileDescriptor.
+             *
+             * FileOutputStream is meant for writing streams of raw bytes such as image data.
+             */
+            // Creates a file output stream to write to the file represented by the specified File object.
             FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
-            fileOutputStream.write(bytes);
+            // Get the absolute width of the available display size in pixels.
+            int screenWidth = getResources().getDisplayMetrics().widthPixels;
+            // Get the absolute width of the available display size in pixels.
+            int screenHeight = getResources().getDisplayMetrics().heightPixels;
+            /*
+             * BitmapFactory: Creates Bitmap objects from various sources,
+             * including: files, streams, and byte-arrays.
+             */
+            // Decode an immutable bitmap from the specified byte array.
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            // Rotate the decoded bitmap before save it.
+            bitmap = rotateTakenPicture(bitmap, screenWidth, screenHeight);
+            // Write a compressed version of the bitmap to the specified output stream.
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            // Close this file output stream and releases any system resources associated with this stream.
             fileOutputStream.close();
+            // Inform the user.
             Toast.makeText(MainActivity.this, "Image saved: " + imageFile.getName(), Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -325,7 +350,51 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
 
     /**
      * Helper Method.
-     * <p>
+     * <p/>
+     * Rotates the taken picture.
+     *
+     * @param bitmap       The bitmap to be rotated.
+     * @param screenWidth  The screen's width.
+     * @param screenHeight The screen's height.
+     * @return
+     */
+    private Bitmap rotateTakenPicture(Bitmap bitmap, int screenWidth, int screenHeight) {
+        // Check the overall orientation of the screen.
+        // PORTRAIT MODE
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            /*
+             * Note: Width and Height are reversed.
+             */
+            // Create a new bitmap, scaled from an existing bitmap, when possible.
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, screenHeight, screenWidth, true);
+            // Return the bitmap's width.
+            int scaledWidth = scaledBitmap.getWidth();
+            // Return the bitmap's height.
+            int scaledHeight = scaledBitmap.getHeight();
+            /*
+             * The Matrix class holds a 3x3 matrix for transforming coordinates.
+             */
+            // Create an identity matrix.
+            Matrix matrix = new Matrix();
+            // Postconcat the matrix with the specified rotation - 90 degrees.
+            matrix.postRotate(90);
+            // Return an immutable rotated bitmap from the specified subset of the source bitmap.
+            bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledWidth, scaledHeight, matrix, true);
+        }
+        // LANDSCAPE MODE
+        else {
+            // There is no need to reverse width and height, in landscape mode.
+            // Create a new bitmap, scaled from an existing bitmap, when possible.
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, true);
+            bitmap = scaledBitmap;
+        }
+        // Return the rotated bitmap.
+        return bitmap;
+    }
+
+    /**
+     * Helper Method.
+     * <p/>
      * Create a media File for saving an image.
      *
      * @return The file that the captured image will be saved to.

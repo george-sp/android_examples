@@ -144,7 +144,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         List<Camera.Size> supportedSizes = parameters.getSupportedPictureSizes();
         // Log the supported picture sizes, for debugging.
         for (int i = 0; i < supportedSizes.size(); i++) {
-            Log.e(LOG_TAG,"" + i + ": (" + supportedSizes.get(i).width + ", " + supportedSizes.get(i).height + ")");
+//            Log.e(LOG_TAG,"" + i + ": (" + supportedSizes.get(i).width + ", " + supportedSizes.get(i).height + ")");
         }
         // Camera.Size: Image size (width and height dimensions).
         Camera.Size sizePicture = supportedSizes.get(7);
