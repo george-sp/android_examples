@@ -376,8 +376,13 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
              */
             // Create an identity matrix.
             Matrix matrix = new Matrix();
-            // Postconcat the matrix with the specified rotation - 90 degrees.
-            matrix.postRotate(90);
+            // Check which camera (back or front facing) is used.
+            if (mCameraId == 0) {
+                // Postconcat the matrix with the specified rotation - 90 degrees.
+                matrix.postRotate(90);
+            } else if (mCameraId == 1) {
+                matrix.postRotate(270);
+            }
             // Return an immutable rotated bitmap from the specified subset of the source bitmap.
             bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledWidth, scaledHeight, matrix, true);
         }
