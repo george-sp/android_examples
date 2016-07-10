@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
             // Decode an immutable bitmap from the specified byte array.
             Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             // Rotate the decoded bitmap before save it.
-            bitmap = rotateTakenPicture(bitmap, screenWidth, screenHeight);
+            bitmap = rotateTakenPicture(bitmap, screenWidth, screenHeight, mCameraId);
             // Write a compressed version of the bitmap to the specified output stream.
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
             // Close this file output stream and releases any system resources associated with this stream.
@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
      * @param screenHeight The screen's height.
      * @return
      */
-    private Bitmap rotateTakenPicture(Bitmap bitmap, int screenWidth, int screenHeight) {
+    private Bitmap rotateTakenPicture(Bitmap bitmap, int screenWidth, int screenHeight, int cameraId) {
         // Check the overall orientation of the screen.
         // PORTRAIT MODE
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -368,9 +368,9 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
              */
             // Create a new bitmap, scaled from an existing bitmap, when possible.
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, screenHeight, screenWidth, true);
-            // Return the bitmap's width.
+            // Get the bitmap's width.
             int scaledWidth = scaledBitmap.getWidth();
-            // Return the bitmap's height.
+            // Get the bitmap's height.
             int scaledHeight = scaledBitmap.getHeight();
             /*
              * The Matrix class holds a 3x3 matrix for transforming coordinates.
@@ -378,13 +378,13 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
             // Create an identity matrix.
             Matrix matrix = new Matrix();
             // Check which camera (back or front facing) is used.
-            if (mCameraId == 0) {
+            if (cameraId == 0) {
                 // Postconcat the matrix with the specified rotation - 90 degrees.
                 matrix.postRotate(90);
-            } else if (mCameraId == 1) {
+            } else if (cameraId == 1) {
                 matrix.postRotate(270);
             }
-            // Return an immutable rotated bitmap from the specified subset of the source bitmap.
+            // Create an immutable rotated bitmap from the specified subset of the source bitmap.
             bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledWidth, scaledHeight, matrix, true);
         }
         // LANDSCAPE MODE
@@ -393,10 +393,15 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
             if (mRotation == Surface.ROTATION_270) {
                 // Create an identity matrix.
                 Matrix matrix = new Matrix();
+                // Create a new bitmap, scaled from an existing bitmap, when possible.
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, true);
+                // Get the width and the height of the new scaled bitmap.
+                int scaledWidth = scaledBitmap.getWidth();
+                int scaledHeight = scaledBitmap.getHeight();
                 // Postconcat the matrix with the specified rotation - 180 degrees.
                 matrix.postRotate(180);
-                // Return an immutable rotated bitmap from the specified subset of the source bitmap.
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, screenWidth, screenHeight, matrix, true);
+                // Create an immutable rotated bitmap from the specified subset of the source bitmap.
+                bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledWidth, scaledHeight, matrix, true);
             } else {
                 // Create a new bitmap, scaled from an existing bitmap, when possible.
                 bitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, true);
