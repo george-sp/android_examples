@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
     private CameraView mCameraView;
     private ImageButton mSwitchCameraImageButton;
     private int mCameraId = -1;
+    private int mRotation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,11 +206,11 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
          * getRotation:          Returns the rotation of the screen
          *                       from its "natural" orientation.
          */
-        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        mRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
         // Get the degrees of the current Surface rotation.
         int degrees = 0;
-        switch (rotation) {
+        switch (mRotation) {
             case Surface.ROTATION_0:
                 degrees = 0;
                 break;
@@ -389,9 +390,17 @@ public class MainActivity extends AppCompatActivity implements PictureCallback {
         // LANDSCAPE MODE
         else {
             // There is no need to reverse width and height, in landscape mode.
-            // Create a new bitmap, scaled from an existing bitmap, when possible.
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, true);
-            bitmap = scaledBitmap;
+            if (mRotation == Surface.ROTATION_270) {
+                // Create an identity matrix.
+                Matrix matrix = new Matrix();
+                // Postconcat the matrix with the specified rotation - 180 degrees.
+                matrix.postRotate(180);
+                // Return an immutable rotated bitmap from the specified subset of the source bitmap.
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, screenWidth, screenHeight, matrix, true);
+            } else {
+                // Create a new bitmap, scaled from an existing bitmap, when possible.
+                bitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, true);
+            }
         }
         // Return the rotated bitmap.
         return bitmap;
