@@ -13,3 +13,4 @@ Some basic and useful android examples
 - [File Chooser](https://github.com/george-sp/android_examples/tree/master/file_chooser_example)
 - [SQLite Database](https://github.com/george-sp/android_examples/tree/master/sqlite_database_example)
 - [Camera Intents](https://github.com/george-sp/android_examples/tree/master/camera_intents_example)
+- [Camera Basics](https://github.com/george-sp/android_examples/tree/master/camera_basics_example)
