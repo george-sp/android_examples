@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@android:color/white"
+        android:onClick="launchActivityBlue"
         android:padding="16dp"
         android:text="Activity Blue"
         android:textAlignment="center"
