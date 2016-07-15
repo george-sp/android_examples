@@ -54,4 +54,11 @@ public class ActivityRed extends AppCompatActivity {
         // Launch ActivityRed activity.
         startActivity(launchActivityBlueIntent);
     }
+
+    public void startCustomService(View view) {
+        // Description of the service to be started.
+        Intent customServiceIntent = new Intent(ActivityRed.this, CustomService.class);
+        // Request that a given application service be started.
+        startService(customServiceIntent);
+    }
 }

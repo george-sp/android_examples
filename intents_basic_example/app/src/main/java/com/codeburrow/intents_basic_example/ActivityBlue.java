@@ -28,4 +28,10 @@ public class ActivityBlue extends AppCompatActivity {
         // Launch ActivityRed activity.
         startActivity(launchActivityRedIntent);
     }
+
+    public void stopCustomService(View view) {
+        // Request that a given application service be stopped.
+        // If the service is not running, nothing happens.
+        stopService(new Intent(ActivityBlue.this, CustomService.class));
+    }
 }

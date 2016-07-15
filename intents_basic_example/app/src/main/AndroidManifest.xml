@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivityRed"/>
+
+        <service android:name=".CustomService"/>
     </application>
 
 </manifest>
