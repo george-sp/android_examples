@@ -11,22 +11,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityBlue">
 
-    <TextView
-        android:id="@+id/activity_blue_text_view"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/launch_activity_red_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="Activity Blue"
+        android:layout_alignParentTop="true"
+        android:hint="Enter your text"
+        android:text="Default Edited Text"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="25sp"/>
 
     <Button
         android:id="@+id/launch_activity_red_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_above="@+id/stop_custom_service_button"
         android:background="@android:color/white"
         android:onClick="launchActivityRed"
         android:padding="16dp"
@@ -36,18 +36,32 @@
         android:textSize="25sp"/>
 
     <Button
-        android:id="@+id/stop_custom_activity_button"
+        android:id="@+id/stop_custom_service_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/launch_activity_red_button"
-        android:layout_centerInParent="true"
-        android:layout_margin="16dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@android:color/white"
+        android:layout_centerInParent="true"
         android:onClick="stopCustomService"
         android:padding="16dp"
         android:text="Stop Custom Service"
         android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/launch_activity_red_data_transfer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stop_custom_service_button"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@android:color/white"
+        android:onClick="launchActivityRedDataTransfer"
+        android:padding="16dp"
+        android:text="Activity Red - Data Transfer"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_purple"
         android:textSize="25sp"/>
 
 </RelativeLayout>
