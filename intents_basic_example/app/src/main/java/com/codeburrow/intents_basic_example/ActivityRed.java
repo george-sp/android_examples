@@ -129,7 +129,12 @@ public class ActivityRed extends AppCompatActivity {
         actionSendIntent.putExtra(Intent.EXTRA_TEXT, mEditText.getText().toString());
         // Create one more intent. an ACTION_CHOOSER intent.
         Intent chooserIntent = Intent.createChooser(actionSendIntent, "Custom Chooser");
-        if (isIntentSafe(actionSendIntent)) {
+        isIntentSafe(actionSendIntent);
+        /* resolveActivity(): returns the Activity component that should be used to handle this intent. */
+        ComponentName componentName = actionSendIntent.resolveActivity(getPackageManager());
+        Log.e(LOG_TAG, "resolveActivity(): " + componentName.getClassName());
+        // Check if there is at an Activity to perform this intent.
+        if (actionSendIntent.resolveActivity(getPackageManager()) != null) {
             // Start the chooser activity.
             startActivity(chooserIntent);
         }
