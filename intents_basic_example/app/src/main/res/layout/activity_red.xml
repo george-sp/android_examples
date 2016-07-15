@@ -11,21 +11,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityRed">
 
-    <TextView
-        android:id="@+id/activity_red_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/launch_activity_blue_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="Activity Red"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"/>
-
     <Button
         android:id="@+id/launch_activity_blue_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/start_custom_service_button"
         android:layout_centerInParent="true"
         android:background="@android:color/white"
         android:onClick="launchActivityBlue"
@@ -39,15 +29,29 @@
         android:id="@+id/start_custom_service_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/launch_activity_blue_button"
         android:layout_centerInParent="true"
-        android:layout_margin="16dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@android:color/white"
         android:onClick="startCustomService"
         android:padding="16dp"
         android:text="Start Custom Service"
         android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/start_activity_blue_for_result_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/start_custom_service_button"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@android:color/white"
+        android:onClick="launchActivityBlueForResult"
+        android:padding="16dp"
+        android:text="Activity Blue - Result Data"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_purple"
         android:textSize="25sp"/>
 
 </RelativeLayout>

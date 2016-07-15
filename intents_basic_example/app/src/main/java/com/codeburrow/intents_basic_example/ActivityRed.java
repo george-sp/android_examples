@@ -17,6 +17,9 @@ import android.widget.Toast;
 public class ActivityRed extends AppCompatActivity {
 
     private static final String LOG_TAG = ActivityRed.class.getSimpleName();
+    public static String ACTIVITY_FOR_RESULT_KEY;
+    // Request code to be returned in onActivityResult()
+    private static final int ACTIVITY_FOR_RESULT_REQUEST_CODE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,21 @@ public class ActivityRed extends AppCompatActivity {
         // Check if there are extra data.
         if (extras != null) {
             String transferredText = extras.getString(ActivityBlue.USER_TEXT_KEY);
-            Toast.makeText(this, transferredText, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityRed.this, transferredText, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTIVITY_FOR_RESULT_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String resultString = data.getExtras().getString(ActivityBlue.ACTIVITY_RESULT_KEY);
+                Toast.makeText(ActivityRed.this, "RESULT: " + resultString, Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(ActivityRed.this, "RESULT: CANCELED", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -69,5 +86,12 @@ public class ActivityRed extends AppCompatActivity {
         Intent customServiceIntent = new Intent(ActivityRed.this, CustomService.class);
         // Request that a given application service be started.
         startService(customServiceIntent);
+    }
+
+    public void launchActivityBlueForResult(View view) {
+        Intent launchActivityBlueForResultIntent = new Intent(ActivityRed.this, ActivityBlue.class);
+        launchActivityBlueForResultIntent.putExtra(ACTIVITY_FOR_RESULT_KEY, true);
+        // Launch an Activity for which you would like a result when it finished.
+        startActivityForResult(launchActivityBlueForResultIntent, ACTIVITY_FOR_RESULT_REQUEST_CODE);
     }
 }
