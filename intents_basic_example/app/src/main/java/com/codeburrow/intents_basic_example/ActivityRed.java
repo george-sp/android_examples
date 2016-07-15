@@ -2,12 +2,17 @@ package com.codeburrow.intents_basic_example;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * @author George Spiridakis <george@codeburrow.com>
@@ -124,7 +129,31 @@ public class ActivityRed extends AppCompatActivity {
         actionSendIntent.putExtra(Intent.EXTRA_TEXT, mEditText.getText().toString());
         // Create one more intent. an ACTION_CHOOSER intent.
         Intent chooserIntent = Intent.createChooser(actionSendIntent, "Custom Chooser");
-        // Start the chooser activity.
-        startActivity(chooserIntent);
+        if (isIntentSafe(actionSendIntent)) {
+            // Start the chooser activity.
+            startActivity(chooserIntent);
+        }
+    }
+
+    /**
+     * Helper Method.
+     * <p/>
+     * Checks if any activity can be performed from the specified intent.
+     *
+     * @param intent Intent to be checked.
+     * @return boolean: True if any activity was found. Otherwise return False.
+     */
+    public boolean isIntentSafe(Intent intent) {
+        // Get PackageManager instance to find global package information.
+        final PackageManager packageManager = getPackageManager();
+        // Retrieve all activities that can be performed for the given intent.
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        // Log these activities.
+        for (int i = 0; i < activities.size(); i++) {
+            String activity = activities.get(i).toString();
+            Log.e(LOG_TAG, activity);
+        }
+        // Return true if one or more activities were found.
+        return activities.size() > 0;
     }
 }
