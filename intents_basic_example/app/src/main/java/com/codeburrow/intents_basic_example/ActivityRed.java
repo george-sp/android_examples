@@ -2,6 +2,7 @@ package com.codeburrow.intents_basic_example;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -93,5 +94,19 @@ public class ActivityRed extends AppCompatActivity {
         launchActivityBlueForResultIntent.putExtra(ACTIVITY_FOR_RESULT_KEY, true);
         // Launch an Activity for which you would like a result when it finished.
         startActivityForResult(launchActivityBlueForResultIntent, ACTIVITY_FOR_RESULT_REQUEST_CODE);
+    }
+
+    public void performActionView(View view) {
+        /*
+         * Implicit Intent:
+         *                  An application does not name the target component,
+         *                  but instead declare a general action to perform,
+         *                  which allows a component from another app to handle it.
+         *
+         * An implicit intent is most commonly used when specifying the action to be performed and optionally some data required for that action.
+         */
+        // Create an intent with a given action and for the given data url.
+        Intent actionViewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com"));
+        startActivity(actionViewIntent);
     }
 }

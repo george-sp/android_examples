@@ -39,7 +39,6 @@ public class ActivityBlue extends AppCompatActivity {
     public void launchActivityRed(View view) {
         /*
          * Explicit Intent:
-         *
          *                  An application can define the target component
          *                  directly in the intent.
          *
