@@ -65,11 +65,39 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/start_activity_blue_for_result_button"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@android:color/white"
             android:onClick="performActionView"
             android:padding="16dp"
             android:text="Perform Action View"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"/>
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/perform_action_view_button"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="Enter your text"
+            android:text="Default Text to be Shared"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"/>
+
+        <Button
+            android:id="@+id/perform_action_send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_text"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/white"
+            android:onClick="performActionSend"
+            android:padding="16dp"
+            android:text="Perform Action Send"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="25sp"/>

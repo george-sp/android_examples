@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -21,11 +22,14 @@ public class ActivityRed extends AppCompatActivity {
     public static String ACTIVITY_FOR_RESULT_KEY;
     // Request code to be returned in onActivityResult()
     private static final int ACTIVITY_FOR_RESULT_REQUEST_CODE = 1234;
+    private EditText mEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_red);
+
+        mEditText = (EditText) findViewById(R.id.edit_text);
 
         // Get the extra data in a Bundle object.
         Bundle extras = getIntent().getExtras();
@@ -108,5 +112,19 @@ public class ActivityRed extends AppCompatActivity {
         // Create an intent with a given action and for the given data url.
         Intent actionViewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com"));
         startActivity(actionViewIntent);
+    }
+
+    public void performActionSend(View view) {
+        // Create an intent with a given action.
+        Intent actionSendIntent = new Intent(Intent.ACTION_SEND);
+        // Set an explicit MIME data type.
+        /* Multi-Purpose Intent Mail Extensions */
+        actionSendIntent.setType("text/plain");
+        // Add extended data to the intent.
+        actionSendIntent.putExtra(Intent.EXTRA_TEXT, mEditText.getText().toString());
+        // Create one more intent. an ACTION_CHOOSER intent.
+        Intent chooserIntent = Intent.createChooser(actionSendIntent, "Custom Chooser");
+        // Start the chooser activity.
+        startActivity(chooserIntent);
     }
 }
