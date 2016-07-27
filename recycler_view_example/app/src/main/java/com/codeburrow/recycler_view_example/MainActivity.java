@@ -1,5 +1,7 @@
 package com.codeburrow.recycler_view_example;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
         fillMoviesList();
         mMoviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(mMoviesList);
         mRecyclerView.setAdapter(mMoviesRecyclerViewAdapter);
+
+        // Add the default list divider that matches the application's theme.
+        int[] attr = new int[]{android.R.attr.listDivider};
+        TypedArray typedArray = obtainStyledAttributes(attr);
+        Drawable defaultDividerDrawable = typedArray.getDrawable(0);
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(defaultDividerDrawable);
+        // Or add a custom one.
+//        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(getResources().getDrawable(R.drawable.divider_drawable));
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     private void fillMoviesList() {
