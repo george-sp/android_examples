@@ -9,7 +9,7 @@
     android:padding="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,14 +19,14 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/genre"
+        android:id="@+id/genre_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:text="genre"/>
 
     <TextView
-        android:id="@+id/year"
+        android:id="@+id/year_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
