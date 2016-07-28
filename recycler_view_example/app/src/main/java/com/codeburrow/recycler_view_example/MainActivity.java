@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoviesRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -23,14 +24,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get a reference to the RecyclerView.
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        // Set the Layout Manager.
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        // Attach an Adapter to the RecyclerView.
         fillMoviesList();
-        mMoviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(mMoviesList);
+        mMoviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(mMoviesList, this);
         mRecyclerView.setAdapter(mMoviesRecyclerViewAdapter);
-
         // Add the default list divider that matches the application's theme.
         int[] attr = new int[]{android.R.attr.listDivider};
         TypedArray typedArray = obtainStyledAttributes(attr);
@@ -58,5 +60,10 @@ public class MainActivity extends AppCompatActivity {
         mMoviesList.add(new Movie("Raiders of the Lost Ark", "Action & Adventure", "1981"));
         mMoviesList.add(new Movie("Goldfinger", "Action & Adventure", "1965"));
         mMoviesList.add(new Movie("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014"));
+    }
+
+    @Override
+    public void onRecyclerViewItemClick(Movie movie) {
+        Toast.makeText(MainActivity.this, movie.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }
