@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShapeModifierView">
+        <attr name="shapeColor" format="color"/>
+        <attr name="shapeName" format="string"/>
+        <attr name="displayShapeName" format="boolean"/>
+    </declare-styleable>
+</resources>
