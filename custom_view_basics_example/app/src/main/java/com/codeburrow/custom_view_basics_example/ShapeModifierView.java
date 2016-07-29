@@ -2,7 +2,9 @@ package com.codeburrow.custom_view_basics_example;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +26,13 @@ public class ShapeModifierView extends View {
     private String mShapeName;
     private boolean mDisplayShapeName;
 
+    private int mShapeWidth = 100;
+    private int mShapeHeight = 100;
+    private int mTextXOffset = 0;
+    private int mTextYOffset = 30;
+    // The Paint class holds the style and color information about how to draw geometries, text and bitmaps.
+    private Paint mPaint;
+
     /**
      * Constructor that is called when inflating a view from XML file,
      * supplying attributes that were specified in the XML file.
@@ -36,6 +45,7 @@ public class ShapeModifierView extends View {
 
         mContext = context;
         retrieveCustomAttributes(attrs);
+        setUpPaint();
     }
 
     /**
@@ -70,16 +80,31 @@ public class ShapeModifierView extends View {
         }
     }
 
-    public int getShapeColor() {
-        return this.mShapeColor;
+    private void setUpPaint() {
+        // Create a new paint with default settings.
+        mPaint = new Paint();
+        // Set the paint's style, used for controlling how primitives's geometries are interpreted.
+        mPaint.setStyle(Paint.Style.FILL);
+        // Set the paint's color.
+        mPaint.setColor(mShapeColor);
+        // Set the paint's text size. This value must be > 0.
+        mPaint.setTextSize(30);
     }
 
-    public String getShapeName() {
-        return this.mShapeName;
-    }
-
-    public boolean isDisplayShapeName() {
-        return this.mDisplayShapeName;
+    /**
+     * Implement this to do your drawing.
+     *
+     * @param canvas The Canvas on which the background will be drawn.
+     */
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        // Draw the specified Rect using the specified paint.
+        canvas.drawRect(0, 0, mShapeWidth, mShapeHeight, mPaint);
+        if (isDisplayShapeName()) {
+            // Draw the specified text.
+            canvas.drawText(mShapeName, mShapeWidth + mTextXOffset, mShapeHeight + mTextYOffset, mPaint);
+        }
     }
 
     public void setShapeColor(int shapeColor) {
@@ -111,5 +136,17 @@ public class ShapeModifierView extends View {
         invalidate();
         // Initiate the layout.
         requestLayout();
+    }
+
+    public int getShapeColor() {
+        return this.mShapeColor;
+    }
+
+    public String getShapeName() {
+        return this.mShapeName;
+    }
+
+    public boolean isDisplayShapeName() {
+        return this.mDisplayShapeName;
     }
 }
