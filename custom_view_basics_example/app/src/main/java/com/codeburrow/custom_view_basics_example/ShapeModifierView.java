@@ -69,4 +69,47 @@ public class ShapeModifierView extends View {
             attrsTypedArray.recycle();
         }
     }
+
+    public int getShapeColor() {
+        return this.mShapeColor;
+    }
+
+    public String getShapeName() {
+        return this.mShapeName;
+    }
+
+    public boolean isDisplayShapeName() {
+        return this.mDisplayShapeName;
+    }
+
+    public void setShapeColor(int shapeColor) {
+        this.mShapeColor = shapeColor;
+        /*
+         * invalidate: Invalidate the whole view.
+         * If the view is visible, onDraw(android.graphics.Canvas) will be called at some point in the future.
+         * This must be called from a UI thread.
+         * To call from a non-UI thread, call postInvalidate().
+         */
+        // To force a view to draw, call invalidate().
+        invalidate();
+        // To initiate a layout, call requestLayout().
+        // This method is typically called by a view on itself when it believes that it can no longer fit within its current bounds.
+        requestLayout();
+    }
+
+    public void setShapeName(String shapeName) {
+        this.mShapeName = shapeName;
+        // Force a view to draw.
+        invalidate();
+        // Initiate the layout.
+        requestLayout();
+    }
+
+    public void setDisplayShapeName(boolean displayShapeName) {
+        this.mDisplayShapeName = displayShapeName;
+        // Force a view to draw.
+        invalidate();
+        // Initiate the layout.
+        requestLayout();
+    }
 }
