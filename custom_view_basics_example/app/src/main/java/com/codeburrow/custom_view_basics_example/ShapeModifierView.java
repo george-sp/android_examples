@@ -92,6 +92,41 @@ public class ShapeModifierView extends View {
     }
 
     /**
+     * Measure the view and its content to determine the measured width and the measured height.
+     * This method is invoked by measure(int, int) and should be overridden
+     * by subclasses to provide accurate and efficient measurement of their contents.
+     * <p/>
+     * CONTRACT:
+     * When overriding this method, you must call setMeasuredDimension(int, int) to store the measured width and height of this view.
+     * Failure to do so will trigger an IllegalStateException, thrown by measure(int, int).
+     * Calling the superclass onMeasure(int, int) is a valid use.
+     *
+     * @param widthMeasureSpec  Horizontal space requirements as imposed by the parent. The requirements are encoded with View.MeasureSpec.
+     * @param heightMeasureSpec Vertical space requirements as imposed by the parent. The requirements are encoded with View.MeasureSpec.
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        // Define the extra padding for the shapeName text.
+        int textPadding = 10;
+
+        // Resolve the width, with constraints imposed by a MeasureSpec.
+        int minWidth = mShapeWidth + getPaddingLeft() + getPaddingRight();
+        int width = resolveSizeAndState(minWidth, widthMeasureSpec, 0);
+
+        // Resolve the height.
+        int minHeight = mShapeHeight + getPaddingTop() + getPaddingBottom();
+        if (mDisplayShapeName) {
+            minHeight += mTextYOffset + textPadding;
+        }
+        int height = resolveSizeAndState(minHeight, heightMeasureSpec, 0);
+
+        // Store the measured width and height. Failing to do so will trigger an exception at measurement time.
+        setMeasuredDimension(width, height);
+    }
+
+    /**
      * Implement this to do your drawing.
      *
      * @param canvas The Canvas on which the background will be drawn.
