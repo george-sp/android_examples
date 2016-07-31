@@ -5,8 +5,11 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -32,6 +35,9 @@ public class ShapeModifierView extends View {
     private int mTextYOffset = 30;
     // The Paint class holds the style and color information about how to draw geometries, text and bitmaps.
     private Paint mPaint;
+
+    private String[] mShapeNameValues = {"square", "circle", "triangle"};
+    private int mShapeNameIndex = 0;
 
     /**
      * Constructor that is called when inflating a view from XML file,
@@ -134,12 +140,33 @@ public class ShapeModifierView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // Draw the specified Rect using the specified paint.
-        canvas.drawRect(0, 0, mShapeWidth, mShapeHeight, mPaint);
+        // Draw the specified shape(Rect, Circle, Path) using the specified paint.
+        if (mShapeName.equals("square")) {
+            canvas.drawRect(0, 0, mShapeWidth, mShapeHeight, mPaint);
+        } else if (mShapeName.equals("circle")) {
+            canvas.drawCircle(mShapeWidth / 2, mShapeHeight / 2, mShapeWidth / 2, mPaint);
+        } else if (mShapeName.equals("triangle")) {
+            canvas.drawPath(getTrianglePath(), mPaint);
+        }
+
         if (isDisplayShapeName()) {
             // Draw the specified text.
             canvas.drawText(mShapeName, mShapeWidth + mTextXOffset, mShapeHeight + mTextYOffset, mPaint);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.e(LOG_TAG, "========== onTouchEvent");
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mShapeNameIndex = (mShapeNameIndex == mShapeNameValues.length - 1) ? 0 : mShapeNameIndex + 1;
+            mShapeName = mShapeNameValues[mShapeNameIndex];
+            // Invalidate the View from a non-UI thread.
+            postInvalidate();
+            return true;
+        }
+        Log.e(LOG_TAG, mShapeNameValues.length + " mShapeName: " + mShapeName + " ,mShapeIndex: " + mShapeNameIndex);
+        return super.onTouchEvent(event);
     }
 
     public void setShapeColor(int shapeColor) {
@@ -183,5 +210,16 @@ public class ShapeModifierView extends View {
 
     public boolean isDisplayShapeName() {
         return this.mDisplayShapeName;
+    }
+
+    public Path getTrianglePath() {
+        Point p1 = new Point(0, mShapeHeight);
+        Point p2 = new Point(p1.x + mShapeWidth, p1.y);
+        Point p3 = new Point(p1.x + (mShapeWidth / 2), p1.y - mShapeHeight);
+        Path trianglePath = new Path();
+        trianglePath.moveTo(p1.x, p1.y);
+        trianglePath.lineTo(p2.x, p2.y);
+        trianglePath.lineTo(p3.x, p3.y);
+        return trianglePath;
     }
 }

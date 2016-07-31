@@ -14,7 +14,7 @@
     <com.codeburrow.custom_view_basics_example.ShapeModifierView
         android:id="@+id/shape_modifier_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:displayShapeName="true"
         app:shapeColor="@color/colorPrimaryDark"
