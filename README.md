@@ -16,3 +16,4 @@ Some basic and useful android examples
 - [Camera Basics](https://github.com/george-sp/android_examples/tree/master/camera_basics_example)
 - [Intents](https://github.com/george-sp/android_examples/tree/master/intents_basic_example)
 - [RecyclerView](https://github.com/george-sp/android_examples/tree/master/recycler_view_example)
+- [Custom View Basics](https://github.com/george-sp/android_examples/tree/master/custom_view_basics_example)
