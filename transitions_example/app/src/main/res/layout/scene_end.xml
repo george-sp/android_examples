@@ -11,6 +11,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codeburrow.transitions_example.TransitionFragment">
 
+    <TextView
+        android:id="@+id/hello_world_textview"
+        android:text="@string/textview_hello_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/transition_button"
         android:layout_width="wrap_content"

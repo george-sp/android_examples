@@ -2,4 +2,6 @@
     <string name="app_name">transitions_example</string>
 
     <string name="button_transition">Start Transition</string>
+
+    <string name="textview_hello_world">Hello Transitions!</string>
 </resources>
