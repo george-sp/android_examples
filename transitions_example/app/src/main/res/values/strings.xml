@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">transitions_example</string>
+
+    <string name="button_transition">Start Transition</string>
 </resources>
