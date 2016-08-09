@@ -11,6 +11,7 @@ import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
 
 public class TransitionFragment extends Fragment {
@@ -61,17 +62,28 @@ public class TransitionFragment extends Fragment {
          * and after the scene change and animates those changes during the transition.
          */
         ChangeBounds changeBounds = new ChangeBounds();
-        // Sets the duration of this transition.
-        changeBounds.setDuration(1000);
+        /*
+         * android.animation.TimeInterpolator:
+         * A time interpolator defines the rate of change of an animation.
+         * This allows animations to have non-linear motion,
+         * such as acceleration and deceleration.
+         * 
+         * See more:
+         * https://developer.android.com/reference/android/animation/TimeInterpolator.html
+         */
+        // Set the interpolator of this transition.
+        changeBounds.setInterpolator(new AnticipateOvershootInterpolator());
+        // Set the duration of this transition.
+        changeBounds.setDuration(2000);
         /*
          * android.transition.Fade:
          * This transition tracks changes to the visibility of target views in the start
          * and end scenes and fades views in or out when they become visible or non-visible.
           */
-        // Constructs a Fade transition that will fade targets out.
+        // Construct a Fade transition that will fade targets out.
         Fade fadeOut = new Fade(Fade.OUT);
         fadeOut.setDuration(1000);
-        // Constructs a Fade transition that will fade targets in.
+        // Construct a Fade transition that will fade targets in.
         Fade fadeIn = new Fade(Fade.IN);
         fadeIn.setDuration(1000);
         /*
