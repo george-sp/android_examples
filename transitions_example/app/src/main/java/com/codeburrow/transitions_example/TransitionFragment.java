@@ -61,6 +61,8 @@ public class TransitionFragment extends Fragment {
          * and after the scene change and animates those changes during the transition.
          */
         ChangeBounds changeBounds = new ChangeBounds();
+        // Sets the duration of this transition.
+        changeBounds.setDuration(1000);
         /*
          * android.transition.Fade:
          * This transition tracks changes to the visibility of target views in the start
@@ -68,8 +70,10 @@ public class TransitionFragment extends Fragment {
           */
         // Constructs a Fade transition that will fade targets out.
         Fade fadeOut = new Fade(Fade.OUT);
+        fadeOut.setDuration(1000);
         // Constructs a Fade transition that will fade targets in.
         Fade fadeIn = new Fade(Fade.IN);
+        fadeIn.setDuration(1000);
         /*
          * android.transition.TransitionSet:
          * A TransitionSet is a parent of child transitions (including other TransitionSets).
