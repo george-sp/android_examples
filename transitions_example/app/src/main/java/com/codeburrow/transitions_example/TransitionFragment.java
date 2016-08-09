@@ -3,15 +3,13 @@ package com.codeburrow.transitions_example;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.transition.ChangeBounds;
-import android.transition.Fade;
 import android.transition.Scene;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
 
 public class TransitionFragment extends Fragment {
@@ -66,52 +64,22 @@ public class TransitionFragment extends Fragment {
      */
     private void goToScene(Scene endScene) {
         /*
-         * android.transition.ChangeBounds:
-         * This transition captures the layout bounds of target views before
-         * and after the scene change and animates those changes during the transition.
+         * android.transition.TransitionInflater:
+         * This class inflates scenes and transitions from resource files.
          */
-        ChangeBounds changeBounds = new ChangeBounds();
+        // Obtain the TransitionInflater from the Activity (given context).
+        TransitionInflater transitionInflater = TransitionInflater.from(getActivity());
         /*
-         * android.animation.TimeInterpolator:
-         * A time interpolator defines the rate of change of an animation.
-         * This allows animations to have non-linear motion,
-         * such as acceleration and deceleration.
-         *
-         * See more:
-         * https://developer.android.com/reference/android/animation/TimeInterpolator.html
+         * android.transition.Transition:
+         * A Transition holds information about animations that will be run on its targets during a scene change.
          */
-        // Set the interpolator of this transition.
-        changeBounds.setInterpolator(new AnticipateOvershootInterpolator());
-        // Set the duration of this transition.
-        changeBounds.setDuration(2000);
-        /*
-         * android.transition.Fade:
-         * This transition tracks changes to the visibility of target views in the start
-         * and end scenes and fades views in or out when they become visible or non-visible.
-          */
-        // Construct a Fade transition that will fade targets out.
-        Fade fadeOut = new Fade(Fade.OUT);
-        fadeOut.setDuration(1000);
-        // Construct a Fade transition that will fade targets in.
-        Fade fadeIn = new Fade(Fade.IN);
-        fadeIn.setDuration(1000);
-        /*
-         * android.transition.TransitionSet:
-         * A TransitionSet is a parent of child transitions (including other TransitionSets).
-         * Using TransitionSets enables more complex choreography of transitions,
-         * where some sets play ORDERING_TOGETHER and others play ORDERING_SEQUENTIAL
-         */
-        TransitionSet transitionSet = new TransitionSet();
-        transitionSet.setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
-        transitionSet
-                .addTransition(fadeOut)
-                .addTransition(changeBounds)
-                .addTransition(fadeIn);
+        // Load the Transition object from a resource.
+        Transition transition = transitionInflater.inflateTransition(R.transition.custom_transition);
         /*
          * android.transition.TransitionManager:
          * This class manages the set of transitions that fire when there is a change of
          * Scene.
          */
-        TransitionManager.go(endScene, transitionSet);
+        TransitionManager.go(endScene, transition);
     }
 }
