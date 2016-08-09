@@ -28,20 +28,29 @@ public class TransitionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.scene_start, container, false);
+        View endView = inflater.inflate(R.layout.scene_end, container, false);
 
         /*
          * android.transition.Scene:
          * A scene represents the collection of values that various properties
          * in the View hierarchy will have when the scene is applied.
          */
-        // Get the Scene described by the resource file associated with the given layoutId parameter.
-        final Scene endScene = Scene.getSceneForLayout(container, R.layout.scene_end, getActivity());
+        final Scene startScene = new Scene(container, (ViewGroup) rootView);
+        final Scene endScene = new Scene(container, (ViewGroup) endView);
 
         Button transitionButton = (Button) rootView.findViewById(R.id.transition_button);
         transitionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToScene(endScene);
+            }
+        });
+
+        Button reverseTransitionButton = (Button) endView.findViewById(R.id.transition_button);
+        reverseTransitionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToScene(startScene);
             }
         });
 
@@ -67,7 +76,7 @@ public class TransitionFragment extends Fragment {
          * A time interpolator defines the rate of change of an animation.
          * This allows animations to have non-linear motion,
          * such as acceleration and deceleration.
-         * 
+         *
          * See more:
          * https://developer.android.com/reference/android/animation/TimeInterpolator.html
          */
