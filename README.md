@@ -18,3 +18,4 @@ Some basic and useful android examples
 - [RecyclerView](https://github.com/george-sp/android_examples/tree/master/recycler_view_example)
 - [Custom View Basics](https://github.com/george-sp/android_examples/tree/master/custom_view_basics_example)
 - [Transitions](https://github.com/george-sp/android_examples/tree/master/transitions_example)
+- [Basic Transition](https://github.com/george-sp/android_examples/tree/master/basic_transition_example)
