@@ -61,8 +61,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <!--<include layout="@layout/scene1"/>-->
-
+        <include layout="@layout/scene1"/>
     </FrameLayout>
 
 </LinearLayout>

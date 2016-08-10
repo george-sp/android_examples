@@ -37,6 +37,8 @@ public class BasicTransitionFragment extends Fragment implements RadioGroup.OnCh
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_basic_transition, container, false);
         assert view != null;
+        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.select_scene);
+        radioGroup.setOnCheckedChangeListener(this);
 
         mSceneRoot = (ViewGroup) view.findViewById(R.id.scene_root);
 
@@ -58,7 +60,22 @@ public class BasicTransitionFragment extends Fragment implements RadioGroup.OnCh
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
+    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+        switch (checkedId) {
+            case R.id.select_scene_1: {
+                // You can start an automatic transition with TransitionManager.go().
+                TransitionManager.go(mScene1);
+                break;
+            }
+            case R.id.select_scene_2: {
+                TransitionManager.go(mScene2);
+                break;
+            }
+            case R.id.select_scene_3: {
+                // You can also start a transition with a custom TransitionManager.
+                mTransitionManagerForScene3.transitionTo(mScene3);
+                break;
+            }
+        }
     }
 }
