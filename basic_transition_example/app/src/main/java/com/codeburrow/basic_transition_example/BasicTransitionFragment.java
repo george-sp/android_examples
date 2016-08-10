@@ -5,8 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
-public class BasicTransitionFragment extends Fragment {
+public class BasicTransitionFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
     private static final String LOG_TAG = BasicTransitionFragment.class.getSimpleName();
 
@@ -20,5 +21,10 @@ public class BasicTransitionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_basic_transition, container, false);
 
         return view;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
     }
 }
