@@ -3,6 +3,8 @@ package com.codeburrow.basic_transition_example;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.transition.Scene;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,15 @@ public class BasicTransitionFragment extends Fragment implements RadioGroup.OnCh
     private Scene mScene1;
     private Scene mScene2;
     private Scene mScene3;
-
     /**
      * Transitions take place in this ViewGroup. We retain this for the dynamic transition on scene 4.
      */
     private ViewGroup mSceneRoot;
+    /**
+     * A custom TransitionManager
+     */
+    private TransitionManager mTransitionManagerForScene3;
+
 
     // Empty Constructor.
     public BasicTransitionFragment() {
@@ -42,6 +48,11 @@ public class BasicTransitionFragment extends Fragment implements RadioGroup.OnCh
 
         // Another scene from a layout resource file.
         mScene3 = Scene.getSceneForLayout(mSceneRoot, R.layout.scene3, getActivity());
+
+        // We create a custom TransitionManager for Scene 3, in which ChangeBounds and Fade
+        // take place at the same time.
+        mTransitionManagerForScene3 = TransitionInflater.from(getActivity())
+                .inflateTransitionManager(R.transition.scene3_transition_manager, mSceneRoot);
 
         return view;
     }
