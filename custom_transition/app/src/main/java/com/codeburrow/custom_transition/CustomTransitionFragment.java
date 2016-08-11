@@ -58,6 +58,12 @@ public class CustomTransitionFragment extends Fragment implements View.OnClickLi
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_CURRENT_SCENE, mCurrentScene);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.show_next_scene_button: {
