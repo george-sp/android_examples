@@ -52,7 +52,19 @@
 
 ** Test On-device App Indexing **
 
-1. Start up the FriendlyChat app and send a new message with the text Hi world!
-2. Go to the Google app, switch to In Apps and search for Hi world.
+1. Start up the `FriendlyChat app` and send a new message with the text Hi world!
+2. Go to the `Google app`, switch to In Apps and search for Hi world.
 3. Confirm that the message can be found in the Google app.
 4. Tap on the result and confirm the FriendlyChat app opens.
+
+### Notifications
+
+** Test Background Notifications **
+
+1. `Run` the updated application.
+2. Hit the device's home button (or otherwise send the app to the `background`).
+4. In `Firebase console` select `Notifications` from the left navigation bar.
+5. Set `Message` Text to "Friendly Chat?".
+6. Select the app we connected earlier as the `App target`.
+7. Click `Send Message`
+8. Confirm that message is received and notification is displayed on the device. The user should receive a notification that takes them back to the application when tapped.

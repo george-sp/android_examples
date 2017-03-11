@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity
                 if (friendlyMessage.getText() != null) {
                     FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
                 }
-                
+
                 // Log a view action on it.
                 FirebaseUserActions.getInstance().end(getMessageViewAction(friendlyMessage));
             }
