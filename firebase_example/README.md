@@ -29,3 +29,11 @@
   }
 }
 ```
+
+### Messages
+
+** Import Messages **
+
+- Go to the `Firebase console > Database`.
+- Select `Import JSON` from the overflow menu of the Database.
+- Import the `initial_messages.json` file.
