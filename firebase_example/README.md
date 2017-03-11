@@ -19,8 +19,8 @@
 
 ** Enable Authentication - [Firebase console](https://console.firebase.google.com/)**
 
-- Enable Google as a sign-in provider from the `Firebase console > Authentication`.
-- Set rules on the database from the `Firebase console > Database > Rules` like: 
+- Enable Google as a sign-in provider from the _`Firebase console > Authentication`_.
+- Set rules on the database from the _`Firebase console > Database > Rules`_ like: 
 ``` 
 {
   "rules": {
@@ -34,6 +34,16 @@
 
 ** Import Messages **
 
-- Go to the `Firebase console > Database`.
-- Select `Import JSON` from the overflow menu of the Database.
-- Import the `initial_messages.json` file.
+- Go to the _`Firebase console > Database`_.
+- Select _`Import JSON`_ from the overflow menu of the Database.
+- Import the _`initial_messages.json`_ file.
+
+** Test message sync **
+
+- From the _`Firebase console > Database > DATA`_ tab, select the _`+`_ sign on the _`messages`_ element.
+- Give the new element a name of -ABCD (note the '**`-`**' sign).
+- Select the _`+`_ sign on the -ABCD element.
+- Give the new element a name of _`name`_ and value of `your name`.
+- Select the _`+`_ sign on the -ABCD element.
+- Give the new element a name of _`text`_ and value of `Hello, World!`.
+- Select Add. 
