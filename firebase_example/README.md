@@ -47,3 +47,12 @@
 - Select the _`+`_ sign on the -ABCD element.
 - Give the new element a name of _`text`_ and value of `Hello, World!`.
 - Select Add. 
+
+### On-device App Indexing
+
+** Test On-device App Indexing **
+
+1. Start up the FriendlyChat app and send a new message with the text Hi world!
+2. Go to the Google app, switch to In Apps and search for Hi world.
+3. Confirm that the message can be found in the Google app.
+4. Tap on the result and confirm the FriendlyChat app opens.

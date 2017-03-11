@@ -47,8 +47,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.appindexing.Action;
+import com.google.firebase.appindexing.FirebaseAppIndex;
+import com.google.firebase.appindexing.FirebaseUserActions;
+import com.google.firebase.appindexing.Indexable;
+import com.google.firebase.appindexing.builders.Indexables;
+import com.google.firebase.appindexing.builders.PersonBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -146,6 +153,16 @@ public class MainActivity extends AppCompatActivity
                 R.layout.item_message,
                 MessageViewHolder.class,
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
+
+            @Override
+            protected FriendlyMessage parseSnapshot(DataSnapshot dataSnapshot) {
+                FriendlyMessage friendlyMessage = super.parseSnapshot(dataSnapshot);
+                if (friendlyMessage != null) {
+                    friendlyMessage.setId(dataSnapshot.getKey());
+                }
+                return friendlyMessage;
+            }
+
             @Override
             protected void populateViewHolder(final MessageViewHolder viewHolder, FriendlyMessage friendlyMessage, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -192,6 +209,13 @@ public class MainActivity extends AppCompatActivity
                             .into(viewHolder.messengerImageView);
                 }
 
+                // Write this message to the on-device index.
+                if (friendlyMessage.getText() != null) {
+                    FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
+                }
+                
+                // Log a view action on it.
+                FirebaseUserActions.getInstance().end(getMessageViewAction(friendlyMessage));
             }
         };
 
@@ -369,5 +393,46 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 });
+    }
+
+    /**
+     * Creates a message to write to the on-device index.
+     *
+     * @param friendlyMessage
+     * @return
+     */
+    private Indexable getMessageIndexable(FriendlyMessage friendlyMessage) {
+        PersonBuilder sender = Indexables.personBuilder()
+                .setIsSelf(mUsername == friendlyMessage.getName())
+                .setName(friendlyMessage.getName())
+                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId() + "/sender"));
+
+        PersonBuilder recipient = Indexables.personBuilder()
+                .setName(mUsername)
+                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId() + "/recipient"));
+
+        Indexable messageToIndex = Indexables.messageBuilder()
+                .setName(friendlyMessage.getText())
+                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId()))
+                .setSender(sender)
+                .setRecipient(recipient)
+                .build();
+
+        return messageToIndex;
+    }
+
+    /**
+     * Creates a logging user action.
+     * (Ensure to set the upload attribute to false in the metadata object of the Action,
+     * so that the user action activity on personal content remains on the device and will not be uploaded to Google servers.)
+     *
+     * @param friendlyMessage
+     * @return
+     */
+    private Action getMessageViewAction(FriendlyMessage friendlyMessage) {
+        return new Action.Builder(Action.Builder.VIEW_ACTION)
+                .setObject(friendlyMessage.getName(), MESSAGE_URL.concat(friendlyMessage.getId()))
+                .setMetadata(new Action.Metadata.Builder().setUpload(false))
+                .build();
     }
 }
