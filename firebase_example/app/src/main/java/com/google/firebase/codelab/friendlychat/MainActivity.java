@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView mAddMessageImageView;
 
     // Firebase instance variables
+    private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
@@ -256,6 +257,9 @@ public class MainActivity extends AppCompatActivity
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseRecyclerAdapter);
 
+        // Initialize Firebase Measurement (Analytics).
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         // Initialize Firebase Remote Config.
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
@@ -310,6 +314,7 @@ public class MainActivity extends AppCompatActivity
                         mPhotoUrl);
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(friendlyMessage);
                 mMessageEditText.setText("");
+                mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);
             }
         });
 
@@ -414,6 +419,7 @@ public class MainActivity extends AppCompatActivity
                 // Use Firebase Measurement to log that invitation was sent.
                 Bundle payload = new Bundle();
                 payload.putString(FirebaseAnalytics.Param.VALUE, "inv_sent");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, payload);
 
                 // Check how many invitations were sent and log.
                 String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
@@ -422,6 +428,7 @@ public class MainActivity extends AppCompatActivity
                 // Use Firebase Measurement to log that invitation was not sent
                 Bundle payload = new Bundle();
                 payload.putString(FirebaseAnalytics.Param.VALUE, "inv_not_sent");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, payload);
 
                 // Sending failed or it was canceled, show failure message to the user
                 Log.d(TAG, "Failed to send invitation.");
