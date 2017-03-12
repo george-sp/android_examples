@@ -98,3 +98,7 @@
 3. Verify that when `Cause Crash` is selected the application crashes.
 4. From the logcat verify that the crash report was successfully uploaded.
 If you do not see logs indicating that the crash report was sent, make sure that the Android Studio logcat filter is set to No Filters.
+
+### Test the App (in the cloud!)
+
+Check more in [codelabs.developers.google.com](https://codelabs.developers.google.com/codelabs/firebase-android/#15).
