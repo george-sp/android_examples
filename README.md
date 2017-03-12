@@ -7,6 +7,7 @@ Some basic and useful android examples
 - [NFC Tag Reader (NDEF Tag)](https://github.com/george-sp/android_examples/tree/master/nfc_tag_reader_example)
 - [NFC Tag Writer (NDEF Tag)](https://github.com/george-sp/android_examples/tree/master/nfc_tag_writer_example)
 - [Android Pay](https://github.com/george-sp/android_examples/tree/master/android_pay_example)
+- [Firebase](https://github.com/george-sp/android_examples/tree/master/firebase_example)
 - [Audio Capture](https://github.com/george-sp/android_examples/tree/master/audio_capture_example)
 - [Audio Player](https://github.com/george-sp/android_examples/tree/master/audio_player_example)
 - [Music Player](https://github.com/george-sp/android_examples/tree/master/music_player_example)
