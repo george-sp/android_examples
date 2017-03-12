@@ -77,3 +77,14 @@
 2. Click on `Add Parameter`.
 3. Set the `Parameter key` to _`friendly_msg_length`_ and the `Parameter value` to `20`.
 4. Click `Publish Changes` when you're done.
+
+### App Invite
+
+** Test App Invite **
+
+1. `Run` the application.
+2. Tap the `menu overflow` at the top right of the screen.
+3. Select the `Invite` option.
+4. You should see the `App Invites interface` which will allow you to select Email and SMS contacts and send a custom invitation. You must have control of the receiving account to view the invitation once sent.
+5. Tap `send` and verify that the invitation is sent to the selected contact.
+6. Verify that selected contact is taken to app install screen from invite.
