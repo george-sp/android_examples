@@ -88,3 +88,13 @@
 4. You should see the `App Invites interface` which will allow you to select Email and SMS contacts and send a custom invitation. You must have control of the receiving account to view the invitation once sent.
 5. Tap `send` and verify that the invitation is sent to the selected contact.
 6. Verify that selected contact is taken to app install screen from invite.
+
+### Crash Reporting
+
+** Test Firebase Crash **
+
+1. `Run` the application.
+2. Verify that the `Cause Crash` menu item is available from the `overflow menu`.
+3. Verify that when `Cause Crash` is selected the application crashes.
+4. From the logcat verify that the crash report was successfully uploaded.
+If you do not see logs indicating that the crash report was sent, make sure that the Android Studio logcat filter is set to No Filters.
