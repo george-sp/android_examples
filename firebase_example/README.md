@@ -34,19 +34,19 @@
 
 ** Import Messages **
 
-- Go to the _`Firebase console > Database`_.
-- Select _`Import JSON`_ from the overflow menu of the Database.
-- Import the _`initial_messages.json`_ file.
+1. Go to the _`Firebase console > Database`_.
+2. Select _`Import JSON`_ from the overflow menu of the Database.
+3. Import the _`initial_messages.json`_ file.
 
 ** Test message sync **
 
-- From the _`Firebase console > Database > DATA`_ tab, select the _`+`_ sign on the _`messages`_ element.
-- Give the new element a name of -ABCD (note the '**`-`**' sign).
-- Select the _`+`_ sign on the -ABCD element.
-- Give the new element a name of _`name`_ and value of `your name`.
-- Select the _`+`_ sign on the -ABCD element.
-- Give the new element a name of _`text`_ and value of `Hello, World!`.
-- Select Add. 
+1. From the _`Firebase console > Database > DATA`_ tab, select the _`+`_ sign on the _`messages`_ element.
+2. Give the new element a name of -ABCD (note the '**`-`**' sign).
+3. Select the _`+`_ sign on the -ABCD element.
+4. Give the new element a name of _`name`_ and value of `your name`.
+5. Select the _`+`_ sign on the -ABCD element.
+6. Give the new element a name of _`text`_ and value of `Hello, World!`.
+7. Select Add. 
 
 ### On-device App Indexing
 
@@ -68,3 +68,12 @@
 6. Select the app we connected earlier as the `App target`.
 7. Click `Send Message`
 8. Confirm that message is received and notification is displayed on the device. The user should receive a notification that takes them back to the application when tapped.
+
+### Remote Config
+
+** Test Remote Config **
+
+1. Go to `Firebase console > Remote Config`.
+2. Click on `Add Parameter`.
+3. Set the `Parameter key` to _`friendly_msg_length`_ and the `Parameter value` to `20`.
+4. Click `Publish Changes` when you're done.
