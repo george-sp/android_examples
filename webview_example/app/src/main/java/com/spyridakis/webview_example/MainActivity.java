@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         // Enable Javascript
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+
+        // Load a URL
+        mWebView.loadUrl("http://beta.html5test.com/");
     }
 
     @Override
