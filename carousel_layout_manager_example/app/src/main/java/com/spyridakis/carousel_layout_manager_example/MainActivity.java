@@ -6,6 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogoDescription(getResources().getString(R.string.logo_description));
 
         List<CountryItem> countryItems = generateCountryItems();
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        CarouselLayoutManager carouselLayoutManager = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
+        carouselLayoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        recyclerView.setLayoutManager(carouselLayoutManager);
+        recyclerView.setHasFixedSize(true);
 
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, countryItems);
         recyclerView.setAdapter(recyclerViewAdapter);
