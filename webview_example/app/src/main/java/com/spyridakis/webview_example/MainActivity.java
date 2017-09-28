@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
+
+        // Enable Javascript
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
     }
 
     @Override
