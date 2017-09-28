@@ -22,3 +22,4 @@ Some basic and useful android examples
 - [Basic Transition](./basic_transition_example)
 - [Custom Transition](./custom_transition_example)
 - [WebView](./webview_example)
+- [Carousel Layout Manager](./carousel_layout_manager_example)
