@@ -4,4 +4,5 @@
     <string name="action_refresh">Settings</string>
     <string name="action_new">Settings</string>
     <string name="logo_description">App Logo</string>
+    <string name="country_name">Country Name</string>
 </resources>
