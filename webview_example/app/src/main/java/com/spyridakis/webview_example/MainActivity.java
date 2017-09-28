@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
     private WebView mWebView;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         mWebView.loadUrl("http://beta.html5test.com/");
 
         // Force links and redirects to open in the WebView instead of a browser
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebViewClient(new Html5TestWebViewClient());
     }
 
     @Override
