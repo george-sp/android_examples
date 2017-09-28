@@ -13,13 +13,15 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
 
     public RecyclerViewHolder(View itemView) {
         super(itemView);
+        itemView.setOnClickListener(this);
+
         mCountryNameTextView = (TextView) itemView.findViewById(R.id.country_name);
         mDrawableImageView = (ImageView) itemView.findViewById(R.id.country_photo);
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(v.getContext(), "Card position: " + getPosition(), Toast.LENGTH_SHORT);
+        Toast.makeText(v.getContext(), "Card position: " + getPosition(), Toast.LENGTH_SHORT).show();
     }
 
     public TextView getmCountryNameTextView() {
