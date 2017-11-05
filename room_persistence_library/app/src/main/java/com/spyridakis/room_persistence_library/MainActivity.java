@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent usersActivityIntent = new Intent(this, UsersActivity.class);
         startActivity(usersActivityIntent);
     }
+
+    public void jankShowUserActivity(View view) {
+        Intent jankShowUserActivity = new Intent(this, JankShowUserActivity.class);
+        startActivity(jankShowUserActivity);
+    }
 }

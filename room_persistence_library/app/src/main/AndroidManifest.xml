@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UsersActivity"/>
+        <activity android:name=".JankShowUserActivity"/>
     </application>
 
 </manifest>
