@@ -14,7 +14,7 @@ import com.spyridakis.room_persistence_library.entity.Book;
 import com.spyridakis.room_persistence_library.entity.Loan;
 import com.spyridakis.room_persistence_library.entity.User;
 
-@Database(entities = {User.class, Book.class, Loan.class}, version = 1)
+@Database(entities = {User.class, Book.class, Loan.class}, version = 2)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
