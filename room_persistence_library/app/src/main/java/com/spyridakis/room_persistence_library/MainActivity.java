@@ -32,4 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Intent typeConvertersIntent = new Intent(this, TypeConvertersActivity.class);
         startActivity(typeConvertersIntent);
     }
+
+    public void customResultActivity(View view) {
+        Intent customResultUserIntent = new Intent(this, CustomResultUserActivity.class);
+        startActivity(customResultUserIntent);
+    }
 }

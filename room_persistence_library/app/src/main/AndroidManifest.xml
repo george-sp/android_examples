@@ -20,6 +20,7 @@
         <activity android:name=".JankShowUserActivity"/>
         <activity android:name=".BooksBorrowedByUserActivity"/>
         <activity android:name=".TypeConvertersActivity"/>
+        <activity android:name=".CustomResultUserActivity"/>
     </application>
 
 </manifest>
