@@ -19,7 +19,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jankShowUserActivity(View view) {
-        Intent jankShowUserActivity = new Intent(this, JankShowUserActivity.class);
-        startActivity(jankShowUserActivity);
+        Intent jankShowUserIntent = new Intent(this, JankShowUserActivity.class);
+        startActivity(jankShowUserIntent);
+    }
+
+    public void booksBorrowedByUserActivity(View view) {
+        Intent booksBorrowedByUserIntent = new Intent(this, BooksBorrowedByUserActivity.class);
+        startActivity(booksBorrowedByUserIntent);
     }
 }
