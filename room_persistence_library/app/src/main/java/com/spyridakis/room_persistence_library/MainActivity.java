@@ -27,4 +27,9 @@ public class MainActivity extends AppCompatActivity {
         Intent booksBorrowedByUserIntent = new Intent(this, BooksBorrowedByUserActivity.class);
         startActivity(booksBorrowedByUserIntent);
     }
+
+    public void typeConvertersActivity(View view) {
+        Intent typeConvertersIntent = new Intent(this, TypeConvertersActivity.class);
+        startActivity(typeConvertersIntent);
+    }
 }
