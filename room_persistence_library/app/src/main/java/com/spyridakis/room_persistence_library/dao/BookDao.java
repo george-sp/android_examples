@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.RoomWarnings;
 import android.arch.persistence.room.Update;
 
 import com.spyridakis.room_persistence_library.entity.Book;
@@ -39,6 +40,7 @@ public interface BookDao {
     @Query("DELETE FROM book")
     void deleteAll();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM book " +
             "INNER JOIN loan ON loan.book_id = book.id " +
             "INNER JOIN user ON user.id = loan.user_id " +
@@ -46,6 +48,7 @@ public interface BookDao {
     )
     List<Book> findBooksBorrowedByNameSync(String userName);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM book " +
             "INNER JOIN loan ON loan.book_id = book.id " +
             "INNER JOIN user ON User.id = loan.user_id " +
@@ -53,18 +56,21 @@ public interface BookDao {
     )
     LiveData<List<Book>> findBooksBorrowedByName(String userName);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM book " +
             "INNER JOIN loan ON loan.book_id LIKE book.id " +
             "WHERE loan.user_id LIKE :userId "
     )
     List<Book> findBooksBorrowedByUserSync(String userId);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM book " +
             "INNER JOIN loan ON loan.book_id LIKE book.id " +
             "WHERE loan.user_id LIKE :userId"
     )
     LiveData<List<Book>> findBooksBorrowedByUser(String userId);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM book " +
             "INNER JOIN loan ON loan.book_id = book.id " +
             "INNER JOIN user ON user.id = loan.user_id " +
@@ -73,6 +79,7 @@ public interface BookDao {
     )
     LiveData<List<Book>> findBooksBorrowedByNameAfter(String userName, Date after);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT * FROM book " +
             "INNER JOIN loan ON loan.book_id LIKE book.id " +
             "WHERE loan.user_id LIKE :userId " +
