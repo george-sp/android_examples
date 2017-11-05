@@ -60,7 +60,7 @@ public class JankShowUserActivity extends AppCompatActivity {
         booksTextView.setText(sb.toString());
     }
 
-    public void onRefreshBtClicked(View view) {
+    public void onRefreshClicked(View view) {
         mBooksTextView.setText("");
         fetchData();
     }

@@ -33,7 +33,7 @@ public class TypeConvertersActivity extends AppCompatActivity {
         subscribeUiBooks();
     }
 
-    public void onRefreshBtClicked(View view) {
+    public void onRefreshClicked(View view) {
         mViewModel.createDb();
     }
 

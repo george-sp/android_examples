@@ -43,7 +43,7 @@ public class CustomResultUserActivity extends AppCompatActivity {
         });
     }
 
-    public void onRefreshBtClicked(View view) {
+    public void onRefreshClicked(View view) {
         populateDb();
         subscribeUiLoans();
     }
