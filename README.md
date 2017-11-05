@@ -23,3 +23,4 @@ Some basic and useful android examples
 - [Custom Transition](./custom_transition_example)
 - [WebView](./webview_example)
 - [Carousel Layout Manager](./carousel_layout_manager_example)
+- [Room Persistence Library](./room_persistence_library)
